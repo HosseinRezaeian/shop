@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-hi
+{% for o in pr %}
+    <img src="media/{{ o.pic }}" width="500" height="600">
+{% endfor %}
 </body>
 </html>
