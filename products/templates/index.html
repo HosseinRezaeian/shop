@@ -2,9 +2,44 @@
 
 
 {% block content %}
-  <ul class="list-group">
-            {% for i in pr %}
-               <li class="list-group-item"><a href="{{ i.slug }}"> {{ i.title }}</a></li>
+  <ul >
+
+                {% for i in pr %}
+
+
+
+                {% if i.num == 1   %}
+                    {{ i.title }}:
+                    {% endif %}
+                    {% for a in pr %}
+                    {% if a.num == 2 and a.categ|slugify == i.title%}
+                        <li>
+                        {{ a.title }}
+                        </li>
+                        <br>
+                         {% endif %}
+                         {% endfor %}
+                        {% for c in pr %}
+                    {% if c.num == 3 and c.categ|slugify == a.title%}
+                        <li>
+                        {{ c.title }}
+                        </li>
+                        <br>
+                            {% endif %}
+                        {% endfor %}
+
+
+
+
+
+
+
+
+                    <br>
+
+
+
             {% endfor %}
+
   </ul>
 {% endblock %}
