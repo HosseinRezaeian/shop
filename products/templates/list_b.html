@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for i in f %}
+    <a href="{% url 'cp' ps1=i.categ  catp=i.slug%}">{{ i.title }}</a>
+<br>
+
+{% endfor %}
+      <br>
+    <br>
+    <br>
+    <br>
+<section class="slider-p">
+
+    {% for i in f %}
+     {% for p in prod %}
+        {% if p.category1|slugify == i.title %}
+
+
+            <div class="item">
+            <div class="card">
+                <img src="media/{{ p.pic }}" alt="Denim Jeans" style="width:100%">
+                <h1>{{ p.title }}</h1>
+                <p class="price">${{ p.price }}</p>
+                <p>Some text about the jeans..</p>
+                <p><button ><a href="{% url 'mp' catp1=i.title p=p.slug pr=p.slug %}">Add to Cart</a></button></p>
+            </div>
+        </div>
+
+
+
+
+
+        {% endif %}
+         <br>
+         <br><br>
+         <br>
+
+    {% endfor %}
+    {% endfor %}
+</section>
+{% endblock %}

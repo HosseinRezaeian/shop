@@ -2,24 +2,25 @@
 
 
 {% block content %}
-  <ul >
+  <ul>
 
                 {% for i in pr %}
 
 
 
                     {% if i.categ_id == none   %}
-                        {{ i.title }}:
+                       <a href="{% url "pro" ps=i.slug %}">{{ i.title }}</a> :
 
                         {% for a in pr %}
+
                         {% if a.categ_id == i.id %}
                             <li>
-                            {{ a.title }}
+                            <a href="{% url 'cp' ps1=a.categ  catp=a.slug%}">{{ a.title }}</a>
                             </li>
-                            <br>
+
                              {% endif %}
                              {% endfor %}
-                    {% endif %}
+                        {% endif %}
 
 
 

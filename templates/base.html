@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+
+
+        <link rel="stylesheet" href="{% static 'owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static "owl.theme.default.min.css" %}">
+    <link rel="stylesheet" href="{% static "all.css"%}">
+    <link rel="stylesheet" href="{% static "inc1.css"%}">
+
+
+    <title>Document</title>
+</head>
+<body>
+<div class="top-menu">
+    <div class="continer">
+        <div class="topbar-r">
+            <ul>
+                <li>   <i class="fa-solid fa-phone-flip"> شماره تماس:09140696251</i></li>
+                <li>    <i class="fa-regular fa-envelope">ایمیل: h@gmail.com</i></li>
+            </ul>
+            
+        
+        </div>
+        <div class="topbar-l"></div>
+
+    </div>
+</div> 
+
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <img src="{% static "logo.png" %}">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#">home </a>
+                    <ul>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+
+                    </ul>
+                
+                </li>
+
+                <li><a href="#">test1</a></li>
+                <li><a href="#">test2</a></li>
+                <li><a href="#">test3</a></li>
+                <li><a href="#">test4</a></li>
+                
+            </ul>
+        </nav>
+
+
+
+    </div>
+</header>
+{% block content %}
+{% endblock %}
+<footer class="footer">
+    <div class="footer">
+        <div class="row">
+            <div class="col-sm-6 col-md-3 item">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#">Web design</a></li>
+                    <li><a href="#">Development</a></li>
+                    <li><a href="#">Hosting</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-md-3 item">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">Company</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6 item text">
+                <h3>Company Name</h3>
+                <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+            </div>
+            <div class="col item social"><i class="fa-solid fa-phone-flip"> شماره تماس:09140696251</i> <i class="fa-regular fa-envelope">ایمیل: h@gmail.com</i></div>
+        </div>
+        <p class="copyright">Company Name © 2018</p>
+    </div>
+</footer>
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
