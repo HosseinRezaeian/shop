@@ -5,7 +5,7 @@ class category(models.Model):
     title = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
     categ = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True,related_name='gor')
-    num=models.IntegerField(null=True,blank=True)
+
 
     def __str__(self):
         return self.title

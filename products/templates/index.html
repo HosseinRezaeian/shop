@@ -8,25 +8,19 @@
 
 
 
-                {% if i.num == 1   %}
-                    {{ i.title }}:
+                    {% if i.categ_id == none   %}
+                        {{ i.title }}:
+
+                        {% for a in pr %}
+                        {% if a.categ_id == i.id %}
+                            <li>
+                            {{ a.title }}
+                            </li>
+                            <br>
+                             {% endif %}
+                             {% endfor %}
                     {% endif %}
-                    {% for a in pr %}
-                    {% if a.num == 2 and a.categ|slugify == i.title%}
-                        <li>
-                        {{ a.title }}
-                        </li>
-                        <br>
-                         {% endif %}
-                         {% endfor %}
-                        {% for c in pr %}
-                    {% if c.num == 3 and c.categ|slugify == a.title%}
-                        <li>
-                        {{ c.title }}
-                        </li>
-                        <br>
-                            {% endif %}
-                        {% endfor %}
+
 
 
 
