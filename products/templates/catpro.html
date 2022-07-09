@@ -10,11 +10,11 @@
 
             <div class="item">
             <div class="card">
-                <img src="media/{{ p.pic }}" alt="Denim Jeans" style="width:100%">
+                <img src="../media/{{ p.pic }}" alt="Denim Jeans" style="width:100%">
                 <h1>{{ p.title }}</h1>
                 <p class="price">${{ p.price }}</p>
                 <p>Some text about the jeans..</p>
-                <p><button><a href="{% url 'mp' catp1=p.category1 p=p.slug pr=p.slug %}">Add to Cart</a></button></p>
+                <p><a href="{% url 'mp' catp1=p.category1.categ p=p.category1 pr=p.slug %}"><button>Add to Cart</button></a></p>
             </div>
         </div>
 

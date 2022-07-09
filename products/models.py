@@ -22,3 +22,14 @@ class product(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Opinion(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.EmailField()
+    title = models.CharField(max_length=50)
+    text_area = models.TextField(max_length=300)
+    proda=models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.title

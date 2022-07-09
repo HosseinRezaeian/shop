@@ -1,9 +1,43 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+
+
 {{ ps.title }}
+     <img src="../../media/{{ ps.pic }}" style="float: left;width: 25%;margin-left: 20%;margin-top: 2%;margin-bottom: 5%">
     <br>
     {{ ps.price }}
     <br>
     {{ ps.discripion }}
+
+
+
+<form method="post" id="my_form" action="{{ request.path }}">
+    {% csrf_token %}
+
+    {{ form }}
+    <input type="hidden" name="prodactf" value="{{ ps.id }}">
+    <input type="hidden" name="path" value="{{ request.path }}">
+
+    <button  type="submit">send</button>
+
+</form>
+{% for o in op %}
+    {% if o.proda == ps.id %}
+        {{ o.name }}
+        <br>
+        {{ o.title }}
+        <br>
+        {{ o.text_area }}
+<hr>
+    {% endif %}
+
+{% endfor %}
+
+
+
+
+
+
 
 {% endblock %}

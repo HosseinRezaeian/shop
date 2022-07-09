@@ -22,7 +22,7 @@
                 <h1>{{ p.title }}</h1>
                 <p class="price">${{ p.price }}</p>
                 <p>Some text about the jeans..</p>
-                <p><button ><a href="{% url 'mp' catp1=i.title p=p.slug pr=p.slug %}">Add to Cart</a></button></p>
+                <p><a href="{% url 'mp' catp1=i.categ p=p.category1 pr=p.slug %}"><button >Add to Cart</button></a></p>
             </div>
         </div>
 
