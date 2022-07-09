@@ -3,9 +3,9 @@
     margin: 0;
     box-sizing: border-box;
     border: 0;
-    
-    
-    
+
+
+
 }
 body {
 
@@ -30,7 +30,7 @@ body {
     color: aliceblue;
     width: 50%;
     float: right;
-    
+
 }
 .topbar-l{
     color: aliceblue;
@@ -50,7 +50,15 @@ body {
     background-color: #fff;
     box-shadow: 0px 1px 6px rgb(99, 80, 80);
     float: right;
-    
+    position: fixed;
+
+   top: 0;
+
+   left: 0;
+
+   z-index: 999;
+    margin-bottom: 5%;
+
 
 }
 /* .header .continer{
@@ -135,12 +143,12 @@ padding: 15px !important;
     margin-right: 30px;
     margin-bottom: 30px;
   }
-  
+
   .price {
     color: rgb(247, 15, 15);
     font-size: 22px;
   }
-  
+
   .card button {
     border: none;
     outline: 0;
@@ -152,7 +160,7 @@ padding: 15px !important;
     width: 100%;
     font-size: 18px;
   }
-  
+
   .card button:hover {
     opacity: 0.7;
   }
@@ -160,8 +168,11 @@ padding: 15px !important;
 
 
 /**** footer ****/
+footer{
+    display: inline-block;
+}
 .footer {
-    position: absolute;
+
     width: 98%;
     bottom: 0;
 

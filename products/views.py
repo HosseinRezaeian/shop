@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import Opinion
 from .forms import opin
 from .models import category
@@ -37,10 +37,10 @@ def mp(request, catp1, pr, p):
                            proda=request.POST['prodactf']
 
                            )
-            pat=request.POST['path']
+            pat = request.POST['path']
             # redirect to a new URL:
             cont.save()
-            form = opin()
+
             return redirect(pat)
 
             # return redirect('mp')

@@ -13,6 +13,8 @@ class category(models.Model):
 # Create your models here.
 class product(models.Model):
     pic = models.ImageField(upload_to='image', null=True, blank=True)
+    pic1 = models.ImageField(upload_to='image', null=True, blank=True)
+    pic2 = models.ImageField(upload_to='image', null=True, blank=True)
     title = models.CharField(max_length=30)
     category1 = models.ForeignKey(category, on_delete=models.CASCADE, null=True, blank=True, related_name='gat')
     price = models.IntegerField()

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div style="margin-top: 10%">
 {% for i in f %}
     <a href="{% url 'cp' ps1=i.categ  catp=i.slug%}">{{ i.title }}</a>
 <br>
@@ -9,7 +10,7 @@
     <br>
     <br>
     <br>
-<section class="slider-p">
+<section class="slider-p" >
 
     {% for i in f %}
      {% for p in prod %}
@@ -38,4 +39,5 @@
     {% endfor %}
     {% endfor %}
 </section>
+    </div>
 {% endblock %}

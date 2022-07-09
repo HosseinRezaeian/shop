@@ -15,35 +15,36 @@
         <link rel="stylesheet" href="{% static 'owl.carousel.min.css' %}">
     <link rel="stylesheet" href="{% static "owl.theme.default.min.css" %}">
     <link rel="stylesheet" href="{% static "all.css"%}">
-    <link rel="stylesheet" href="{% static "inc1.css"%}">
+    <link rel="stylesheet" href="{% static "s1.css"%}">
 
 
     <title>Document</title>
 </head>
 <body>
-<div class="top-menu">
+
+
+<header class="header">
+    <div class="top-menu">
     <div class="continer">
         <div class="topbar-r">
             <ul>
                 <li>   <i class="fa-solid fa-phone-flip"> شماره تماس:09140696251</i></li>
                 <li>    <i class="fa-regular fa-envelope">ایمیل: h@gmail.com</i></li>
             </ul>
-            
-        
+
+
         </div>
         <div class="topbar-l"></div>
 
     </div>
-</div> 
-
-<header class="header">
+</div>
     <div class="container">
         <div class="logo">
             <img src="{% static "logo.png" %}">
         </div>
         <nav class="menu">
             <ul>
-                <li><a href="#">home </a>
+                <li><a href="{% url 'index' %}">home </a>
                     <ul>
                             <li><a href="#">about</a></li>
                             <li><a href="#">about</a></li>
@@ -98,9 +99,9 @@
 </footer>
 
 
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'owl.carousel.min.js' %}"></script>
+<script src="{% static 'main.js' %}"></script>
 
 </body>
 </html>

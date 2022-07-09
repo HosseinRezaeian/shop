@@ -3,9 +3,9 @@
     margin: 0;
     box-sizing: border-box;
     border: 0;
-    
-    
-    
+
+
+
 }
 body {
 
@@ -30,7 +30,7 @@ body {
     color: aliceblue;
     width: 50%;
     float: right;
-    
+
 }
 .topbar-l{
     color: aliceblue;
@@ -50,7 +50,15 @@ body {
     background-color: #fff;
     box-shadow: 0px 1px 6px rgb(99, 80, 80);
     float: right;
-    height: 90;
+    position: absolute;
+
+   top: 0;
+
+   left: 0;
+
+   z-index: 999;
+    margin-bottom: 5%;
+
 
 }
 /* .header .continer{
@@ -122,6 +130,7 @@ padding: 15px !important;
    float: right;
    flex-wrap: wrap;
    justify-content: right;
+    height: 100%;
 }
 
 /******* card *******/
@@ -133,14 +142,13 @@ padding: 15px !important;
     font-family: arial;
     margin-right: 30px;
     margin-bottom: 30px;
-    margin-top: 20px;
   }
-  
+
   .price {
     color: rgb(247, 15, 15);
     font-size: 22px;
   }
-  
+
   .card button {
     border: none;
     outline: 0;
@@ -152,7 +160,7 @@ padding: 15px !important;
     width: 100%;
     font-size: 18px;
   }
-  
+
   .card button:hover {
     opacity: 0.7;
   }
@@ -160,9 +168,13 @@ padding: 15px !important;
 
 
 /**** footer ****/
+footer{
+    display: inline-block;
+}
 .footer {
+
     width: 98%;
-    display: flex;
+    bottom: 0;
 
 }
 .footer a{
