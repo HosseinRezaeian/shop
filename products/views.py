@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Opinion
+from .models import Opinion,report
 from .forms import opin
+from .forms import repo
 from .models import category
 from .models import product
 
@@ -24,36 +25,58 @@ def prodact(request, ps):
 
 def mp(request, catp1, pr, p):
     if request.method == 'POST':
+
         print('thank you')
         # create a form instance and populate it with data from the request:
-        form = opin(request.POST)
+
         # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            cont = Opinion(name=form.cleaned_data.get('namef'),
-                           email=form.cleaned_data.get('emailf'),
-                           title=form.cleaned_data.get('titlef'),
-                           text_area=form.cleaned_data.get('text_arf'),
-                           proda=request.POST['prodactf']
+        if 'f1' in request.POST:
+            form = opin(request.POST)
 
-                           )
-            pat = request.POST['path']
-            # redirect to a new URL:
-            cont.save()
+            if form.is_valid() :
+                # process the data in form.cleaned_data as required
+                cont = Opinion(name=form.cleaned_data.get('namef'),
+                               email=form.cleaned_data.get('emailf'),
+                               title=form.cleaned_data.get('titlef'),
+                               text_area=form.cleaned_data.get('text_arf'),
+                               proda=request.POST['prodactf']
 
-            return redirect(pat)
+                               )
+                pat = request.POST['path']
+                # redirect to a new URL:
+                cont.save()
+
+                return redirect(pat)
 
             # return redirect('mp')
             print('thanks')
+        elif 'f2' in request.POST:
+            form2 = repo(request.POST)
+            if form2.is_valid():
+                cont = report (name=form2.cleaned_data.get('name_f'),
+                               email=form2.cleaned_data.get('email_f'),
+                               text=form2.cleaned_data.get('text_f'),
 
-        # if a GET (or any other method) we'll create a blank form
+                               id_c=request.POST['idc']
+
+                               )
+                pat = request.POST['path1']
+                # redirect to a new URL:
+                cont.save()
+
+                return redirect(pat)
+
+
+
+
     else:
         form = opin()
+        form2=repo()
         print(':)')
     ps = product.objects.get(slug=pr)
     op = Opinion.objects.all().order_by('-id')
 
-    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op})
+    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op,'form2': form2})
 
 
 def cp(request, ps1, catp):

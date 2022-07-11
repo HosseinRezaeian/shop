@@ -9,3 +9,7 @@ class opin(forms.Form):
 
 
 
+class repo(forms.Form):
+    name_f = forms.CharField(max_length=50)
+    email_f = forms.CharField()
+    text_f = forms.CharField(max_length=300)

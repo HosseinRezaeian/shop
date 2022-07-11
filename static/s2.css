@@ -97,7 +97,7 @@ body {
 .menu ul li ul li{
     list-style: none;
 }
-.menu > ul > li:active ul {
+.menu > ul > li:hover ul {
     opacity: 1;
     visibility: visible;
 }

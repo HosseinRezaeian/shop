@@ -1,8 +1,14 @@
 from django.contrib import admin
-from . import models
+from .models import product,category,Opinion,report
 
 # Register your models here.
+class filterr(admin.ModelAdmin):
+    list_display = ('title','text_area','name','id',)
 
-admin.site.register(models.product)
-admin.site.register(models.category)
-admin.site.register(models.Opinion)
+class filterr2(admin.ModelAdmin):
+    list_display = ('text','id_c',)
+
+admin.site.register(product)
+admin.site.register(category)
+admin.site.register(Opinion,filterr)
+admin.site.register(report,filterr2)

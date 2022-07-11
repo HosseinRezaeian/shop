@@ -1,6 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
+
+<style>
+.rc{
+    width: 2%;
+    float: left;
+}
+
+
+
+
+
+      .rc:hover .report {
+               opacity: 0;
+
+    visibility: visible;
+      }
+</style>
+
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -71,7 +92,7 @@
     <input type="hidden" name="prodactf" value="{{ ps.id }}">
     <input type="hidden" name="path" value="{{ request.path }}">
 
-    <button class="but_sub"  type="submit">send</button>
+    <button class="but_sub" name="f1" type="submit">send</button>
 
 </form>
 
@@ -95,15 +116,26 @@
                 {{ o.text_area }}
                 </p>
         </div>
+
+
+    <img class="rc" src="{% static "report.svg" %}"   >
+
+<di class="report">
+<form method="post" action="{{ request.path }}">
+    {% csrf_token %}
+    {{ form2 }}
+    <input type="hidden" name="path1" value="{{ request.path }}">
+    <input type="hidden" name="idc" value="{{ o.id }}">
+<button class="but_sub" name="f2" type="submit">send</button>
+</form>
+
+</di>
+
+
 </div>
-
-
     {% endif %}
 
 {% endfor %}
-
-
-
 
 
 
