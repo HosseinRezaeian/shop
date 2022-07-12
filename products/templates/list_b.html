@@ -1,43 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
     <div style="margin-top: 10%">
-{% for i in f %}
-    <a href="{% url 'cp' ps1=i.categ  catp=i.slug%}">{{ i.title }}</a>
-<br>
-
-{% endfor %}
-      <br>
-    <br>
-    <br>
-    <br>
+    {% for g in f1 %}
+        <a href="{% url "pro" ps=g.id %}">{{ g.title }}</a>
+        <br>
+    {% endfor %}
 <section class="slider-p" >
-
-    {% for i in f %}
-     {% for p in prod %}
-        {% if p.category1|slugify == i.title %}
-
-
-            <div class="item">
+{% for i in prod %}
+    {% if i.category1_id|slugify == g3|slugify  %}
+                    <div class="item">
             <div class="card">
-                <img src="media/{{ p.pic }}" alt="Denim Jeans" style="width:100%">
-                <h1>{{ p.title }}</h1>
-                <p class="price">${{ p.price }}</p>
+                <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
+                <h1>{{ i.title }}</h1>
+                <p class="price">${{ i.price }}</p>
                 <p>Some text about the jeans..</p>
-                <p><a href="{% url 'mp' catp1=i.categ p=p.category1 pr=p.slug %}"><button >Add to Cart</button></a></p>
+                <p><a href="{% url 'mp' catp1=g3.title pr=i.slug %}"><button>Add to Cart</button></a></p>
             </div>
         </div>
 
 
 
-
-
+    {% endif %}
+    {% for g in f1 %}
+        {% if i.category1_id|slugify == g.id|slugify  %}
+                                <div class="item">
+            <div class="card">
+                <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
+                <h1>{{ i.title }}</h1>
+                <p class="price">${{ i.price }}</p>
+                <p>Some text about the jeans..</p>
+                <p><a href="{% url 'mp' catp1=g.id pr=i.slug %}"><button>Add to Cart</button></a></p>
+            </div>
+        </div>
         {% endif %}
-         <br>
-         <br><br>
-         <br>
+        {% endfor %}
+    {% endfor %}
 
-    {% endfor %}
-    {% endfor %}
 </section>
     </div>
+
 {% endblock %}

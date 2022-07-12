@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Opinion,report
+from .models import Opinion, report
 from .forms import opin
 from .forms import repo
 from .models import category
@@ -7,23 +7,23 @@ from .models import product
 
 
 def index(request):
-    c = category.objects.all().order_by('id')
-
-    return render(request, 'index.html', {'pr': c})
+    return render(request, 'index.html', {'genres': category.objects.all()})
 
 
 # # Create your views here.
 def prodact(request, ps):
-    f = category.objects.get(slug=ps)
-    g = f.gor.all()
+    g1 = category.objects.get(id=ps)
+    g3 = ps
+    g2 = g1.get_children()
+
     prod = product.objects.all()
 
     # c = f.gat.all()
 
-    return render(request, 'list_b.html', {'f': g, 'prod': prod})
+    return render(request, 'list_b.html', {'f1': g2,'g3': g3 ,'prod': prod})
 
 
-def mp(request, catp1, pr, p):
+def mp(request, catp1, pr):
     if request.method == 'POST':
 
         print('thank you')
@@ -33,7 +33,7 @@ def mp(request, catp1, pr, p):
         if 'f1' in request.POST:
             form = opin(request.POST)
 
-            if form.is_valid() :
+            if form.is_valid():
                 # process the data in form.cleaned_data as required
                 cont = Opinion(name=form.cleaned_data.get('namef'),
                                email=form.cleaned_data.get('emailf'),
@@ -53,13 +53,13 @@ def mp(request, catp1, pr, p):
         elif 'f2' in request.POST:
             form2 = repo(request.POST)
             if form2.is_valid():
-                cont = report (name=form2.cleaned_data.get('name_f'),
-                               email=form2.cleaned_data.get('email_f'),
-                               text=form2.cleaned_data.get('text_f'),
+                cont = report(name=form2.cleaned_data.get('name_f'),
+                              email=form2.cleaned_data.get('email_f'),
+                              text=form2.cleaned_data.get('text_f'),
 
-                               id_c=request.POST['idc']
+                              id_c=request.POST['idc']
 
-                               )
+                              )
                 pat = request.POST['path1']
                 # redirect to a new URL:
                 cont.save()
@@ -71,12 +71,12 @@ def mp(request, catp1, pr, p):
 
     else:
         form = opin()
-        form2=repo()
+        form2 = repo()
         print(':)')
     ps = product.objects.get(slug=pr)
     op = Opinion.objects.all().order_by('-id')
 
-    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op,'form2': form2})
+    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op, 'form2': form2})
 
 
 def cp(request, ps1, catp):

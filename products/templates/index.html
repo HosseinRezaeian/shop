@@ -1,42 +1,27 @@
 {% extends 'base.html' %}
-
+{% load mptt_tags %}
 
 {% block content %}
-    <div style="margin-top: 10%">
-  <ul>
-
-                {% for i in pr %}
 
 
+{% load mptt_tags %}
+<ol >
 
-                    {% if i.categ_id == none   %}
-                       <a href="{% url "pro" ps=i.slug %}">{{ i.title }}</a> :
+    {% recursetree genres %}
 
-                        {% for a in pr %}
+        <li>
+            <a href="{% url "pro" ps=node.id %}">{{ node.title }}</a>
+                    {% if not node.is_leaf_node %}
 
-                        {% if a.categ_id == i.id %}
-                            <li>
-                            <a href="{% url 'cp' ps1=a.categ  catp=a.slug%}">{{ a.title }}</a>
-                            </li>
+                                                <ol class="children">
+                                         {{ children }}
+                                                </ol>
+                     {% endif %}
+        </li>
 
-                             {% endif %}
-                             {% endfor %}
-                        {% endif %}
+    {% endrecursetree %}
 
-
-
-
-
-
+</ol>
 
 
-
-                    <br>
-
-
-
-            {% endfor %}
-
-  </ul>
-    </div>
 {% endblock %}

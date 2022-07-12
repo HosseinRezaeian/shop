@@ -6,17 +6,40 @@
 
 
 <style>
+
+.fr {
+
+    left:0;
+
+    background-color: #fff;
+
+    width: 50%;
+    right: 0;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+}
+.im{margin-right: 25%;
+   
+float: left}
+.im:checked ~ .fr {
+  opacity: 1;
+    visibility: visible;
+}
 .rc{
     width: 2%;
     float: left;
+}
+.report{
+    opacity: 0;
 }
 
 
 
 
-
-      .rc:hover .report {
-               opacity: 0;
+.rc:hover .report {
+               opacity: 1;
 
     visibility: visible;
       }
@@ -118,9 +141,10 @@
         </div>
 
 
-    <img class="rc" src="{% static "report.svg" %}"   >
+    <input type="checkbox" id="im" class="im"/>
+    <label for="im" > <img class="im" src="{% static "report.svg" %}"></label>
 
-<di class="report">
+<div class="fr">
 <form method="post" action="{{ request.path }}">
     {% csrf_token %}
     {{ form2 }}
@@ -129,7 +153,7 @@
 <button class="but_sub" name="f2" type="submit">send</button>
 </form>
 
-</di>
+</div>
 
 
 </div>

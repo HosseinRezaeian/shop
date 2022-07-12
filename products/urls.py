@@ -6,8 +6,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.index,name='index'),
     path('<slug:ps>', views.prodact, name="pro"),
-    path('<slug:ps1>/<slug:catp>', views.cp, name="cp"),
-    path('<slug:catp1>/<slug:p>/<slug:pr>', views.mp, name="mp"),
+    # path('<slug:ps1>/<slug:catp>', views.cp, name="cp"),
+    path('<slug:catp1>/<slug:pr>', views.mp, name="mp"),
 
 
 ]
