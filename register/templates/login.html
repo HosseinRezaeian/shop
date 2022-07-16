@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div dir="rtl" style="width: 20%;height: 60%">
+    {% load crispy_forms_tags %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        {{ login_form|crispy  }}
+
+
+        <button type="submit">ورود</button>
+    </form>
+</div>
+{% endblock %}

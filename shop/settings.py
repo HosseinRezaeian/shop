@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-y%8!#*ga5o+xmbw4x#^n^*-f40wc-yael!z#q&p&$b98v%xh(_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'products',
     'mptt',
     'register',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+AUTH_USER_MODEL = 'register.User'
+RECAPTCHA_PUBLIC_KEY = '6LdhsfQgAAAAAGEu-RBox9wm4fnCKmKVB-EON6av'
+RECAPTCHA_PRIVATE_KEY = '6LdhsfQgAAAAAM39kI2xP4-NcP8glkdr7SWyxPl4'
