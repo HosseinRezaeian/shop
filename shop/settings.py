@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-y%8!#*ga5o+xmbw4x#^n^*-f40wc-yael!z#q&p&$b98v%xh(_
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
-
+ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -127,3 +127,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'register.User'
 RECAPTCHA_PUBLIC_KEY = '6LdhsfQgAAAAAGEu-RBox9wm4fnCKmKVB-EON6av'
 RECAPTCHA_PRIVATE_KEY = '6LdhsfQgAAAAAM39kI2xP4-NcP8glkdr7SWyxPl4'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'exhozr@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587

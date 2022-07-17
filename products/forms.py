@@ -1,5 +1,5 @@
 from django import forms
-
+from django.core.exceptions import ValidationError
 
 class opin(forms.Form):
     namef = forms.CharField(label='نام  و نام خانوادگی',max_length=50, widget=forms.TextInput(attrs={'class':'filed_f','placeholder':'نام'}),error_messages={'max_length':'بیشتر از 50 کاراکتر'})
@@ -13,3 +13,8 @@ class repo(forms.Form):
     name_f = forms.CharField(max_length=50)
     email_f = forms.CharField()
     text_f = forms.CharField(max_length=300)
+
+
+
+
+
