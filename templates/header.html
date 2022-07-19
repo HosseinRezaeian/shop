@@ -1,0 +1,47 @@
+{% load render_partial %}
+{% load static %}
+<header class="header">
+    <div class="top-menu">
+    <div class="continer">
+        <div class="topbar-r">
+            <ul>
+                <li>   <i class="fa-solid fa-phone-flip"> شماره تماس:09140696251</i></li>
+                <li>    <i class="fa-regular fa-envelope">ایمیل: h@gmail.com</i></li>
+            </ul>
+
+
+        </div>
+        <div class="topbar-l"></div>
+
+    </div>
+</div>
+    <div class="container">
+        <div class="logo">
+            <img src="{% static "logo.png" %}">
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="{% url 'index' %}">home </a>
+                    <ul>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+                            <li><a href="#">about</a></li>
+
+
+                    </ul>
+
+                </li>
+
+                <li><a href="#">test1</a></li>
+                <li><a href="#">test2</a></li>
+                <li><a href="#">test3</a></li>
+                <li><a href="#">test4</a></li>
+
+            </ul>
+        </nav>
+
+
+
+    </div>
+</header>
