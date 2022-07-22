@@ -77,7 +77,7 @@ class loginV(View):
                     is_password_correct = user.check_password(user_pass)
                     if is_password_correct:
                         login(request, user)
-                        return redirect('login')
+                        return redirect('index')
                     else:
                         login_form.add_error('email', 'کلمه عبور اشتباه است')
             else:

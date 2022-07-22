@@ -1,13 +1,20 @@
+from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from .models import Opinion, report
+from cart.models import order, order_details
 from .forms import opin
 from .forms import repo
 from .models import category
 from .models import product
+from django.contrib.sites.shortcuts import get_current_site
 
 
 def index(request):
-    return render(request, 'index.html', {'genres': category.objects.all()})
+    return render(request, 'list_a.html', {'genres': category.objects.all()})
+
+
+def home(request):
+    return render(request, 'index.html')
 
 
 # # Create your views here.
@@ -20,7 +27,7 @@ def prodact(request, ps):
 
     # c = f.gat.all()
 
-    return render(request, 'list_b.html', {'f1': g2,'g3': g3 ,'prod': prod})
+    return render(request, 'list_b.html', {'f1': g2, 'g3': g3, 'prod': prod})
 
 
 def mp(request, catp1, pr):
@@ -69,14 +76,33 @@ def mp(request, catp1, pr):
 
 
 
+
     else:
+
         form = opin()
         form2 = repo()
-        print(':)')
+        current_user = request.user
+        count_prodact_cart=''
+
+        if str(current_user) != "AnonymousUser":
+
+            order_v = order.objects.get(user_id=current_user.id)
+            ps = product.objects.get(slug=pr)
+
+            or_d = order_details.objects.filter(order=order_v,product=ps).first()
+            if or_d is not None:
+                count_prodact_cart=or_d.countp
+            else:
+                count_prodact_cart=''
+
+
+
+
+
     ps = product.objects.get(slug=pr)
     op = Opinion.objects.all().order_by('-id')
 
-    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op, 'form2': form2})
+    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op, 'form2': form2,'count_cart':count_prodact_cart})
 
 
 def cp(request, ps1, catp):

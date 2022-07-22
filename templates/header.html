@@ -3,10 +3,13 @@
 <header class="header">
     <div class="top-menu">
     <div class="continer">
+         <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
         <div class="topbar-r">
             <ul>
-                <li>   <i class="fa-solid fa-phone-flip"> شماره تماس:09140696251</i></li>
-                <li>    <i class="fa-regular fa-envelope">ایمیل: h@gmail.com</i></li>
+                <li>{{ request.path }}</li>
+                <li>   <i class="fa-solid fa-phone-flip"> </i> شماره تماس:{{ lep.phone }}</li>
+                <li>   <a style=" text-decoration: none;color: #FFFFFF" href="#"><i class="fa-regular fa-envelope"></i> ایمیل: {{lep.email}}</a> </li>
             </ul>
 
 
@@ -17,26 +20,62 @@
 </div>
     <div class="container">
         <div class="logo">
-            <img src="{% static "logo.png" %}">
+            <img src="../../media/{{ lep.logo }}">
         </div>
         <nav class="menu">
+{#            <ul>#}
+{#                <li><a href="{% url 'index' %}">home </a>#}
+{#                    <ul>#}
+{#                            <li><a href="#">about</a></li>#}
+{#                            <li><a href="#">about</a></li>#}
+{#                            <li><a href="#">about</a></li>#}
+{#                            <li><a href="#">about</a></li>#}
+{##}
+{##}
+{#                    </ul>#}
+{##}
+{#                </li>#}
+{##}
+{#                <li><a href="#">test1</a></li>#}
+{#                <li><a href="#">test2</a></li>#}
+{#                <li><a href="#">test3</a></li>#}
+{#                <li><a href="#">test4</a></li>#}
+{##}
+{#            </ul>#}
             <ul>
-                <li><a href="{% url 'index' %}">home </a>
-                    <ul>
-                            <li><a href="#">about</a></li>
-                            <li><a href="#">about</a></li>
-                            <li><a href="#">about</a></li>
-                            <li><a href="#">about</a></li>
+                {% for m in menu %}
+                    {% if m.sub_menu_id is null %}
+
+                <li><a href="{% url m.url_name %}">{{ m.title }}</a>
+                <ul>
+                        {% for m1 in menu %}
+
+                            {% if m1.sub_menu_id == m.id %}
+                                <li><a href="{% url m1.url_name %}">{{ m1.title }}</a></li>
+                            {% endif %}
+
+                        {% endfor %}
+                        </ul></li>
+                    {% endif %}
+
+                {% endfor %}
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">logout</a></li>
+
+                {% else %}
+                            <li><a href="{% url 'signup' %}">register</a>
+                <ul>
+
+                                <li><a href="{% url 'login' %}">login</a></li>
+                                <li><a href="{% url 'signup' %}">sign-up</a></li>
 
 
-                    </ul>
 
-                </li>
+                        </ul></li>
 
-                <li><a href="#">test1</a></li>
-                <li><a href="#">test2</a></li>
-                <li><a href="#">test3</a></li>
-                <li><a href="#">test4</a></li>
+
+
+            {% endif %}
 
             </ul>
         </nav>

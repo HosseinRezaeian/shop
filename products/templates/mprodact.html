@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+<script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 <style>
@@ -51,14 +52,26 @@ float: left}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'cmsh.css' %}">
-<div style="margin-top: 10%">
-   {{ ps.title }}
-       <br>
-    {{ ps.price }}
-    <br>
-    {{ ps.discripion }}
-</div>
+<div style="margin-bottom: 10%;block:inline-block; height:100%;margin-right: 2%;margin-left: 2%;">
+    <div style="width: 50%; float:right;height:100%;">
+       {{ ps.title }}
+           <br>
+        {{ ps.price }}
+        <br>
+        {{ ps.discripion }}
+        <br>
+        {% if ps.pic1 is  No %}
+yes
+
+            {% else %}
+
+no
+
+        {% endif %}
+
+    </div>
 {#slider#}
+
 
                 <div class="container" style="width: 30%; float: left;margin-top: 2%;height: 90%">
 
@@ -72,9 +85,19 @@ float: left}
 
                         <!-- Wrapper for slides -->
                                                     <div class="carousel-inner" >
-                                                          <div class="item active">
-                                                                <img src="../../media/{{ ps.pic }}" alt="Los Angeles" style="width:100%;height: 100%">
+
+
+                                                        <div class="item active">
+                                                                <img src="../../media/{{ ps.pic }}" alt="{{ ps.pic }}" style="width:100%;height: 100%">
                                                           </div>
+
+
+
+
+
+
+
+
 
                                                           <div class="item">
                                                                 <img src="../../media/{{ ps.pic1 }}" alt="Chicago" style="width:100%;height: 100%">
@@ -83,6 +106,7 @@ float: left}
                                                           <div class="item">
                                                                 <img src="../../media/{{ ps.pic2 }}" alt="New york" style="width:100%;height: 100%">
                                                           </div>
+
                                                     </div>
 
                         <!-- Left and right controls -->
@@ -98,10 +122,33 @@ float: left}
                 </div>
 
 
+<div style="margin-top: 10%">
+    {% if user.is_authenticated %}
+            <input min="1" default="1" type="number" name="email" required="" id="id_email">
+<button onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
+        <h3> {{ count_cart }} </h3>
+    <script>
+    function add(pro) {
+        const im=$("#id_email").val();
+
+ console.log(pro);
+$.get("{% url 'cart' %}",{
+    im,pro
+}).then(result => {
+    console.log(result);
+});
 
 
+}
 
-<div class="command">
+</script>
+</div>
+
+{% endif %}
+</div>
+
+
+<div class="command" >
 
 <form method="post" id="my_form" action="{{ request.path }}">
     {% csrf_token %}
@@ -112,7 +159,7 @@ float: left}
     {% endfor %}
 
 
-    <input type="hidden" name="prodactf" value="{{ ps.id }}">
+    <input type="hidden" id="v1" name="prodactf" value="{{ ps.id }}">
     <input type="hidden" name="path" value="{{ request.path }}">
 
     <button class="but_sub" name="f1" type="submit">send</button>

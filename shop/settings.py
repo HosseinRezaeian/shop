@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_render_partial',
     'products',
+    'cart',
     'crispy_forms',
     'mptt',
     'register',
     'hcf',
+    'fontawesomefree',
 
     'captcha',
 ]

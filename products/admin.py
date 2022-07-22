@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import product, category, Opinion, report
+from .models import product, category, Opinion, report,brand
 
 
 # Register your models here.
@@ -15,3 +15,4 @@ admin.site.register(product)
 admin.site.register(category)
 admin.site.register(Opinion, filterr)
 admin.site.register(report, filterr2)
+admin.site.register(brand)

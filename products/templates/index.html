@@ -2,26 +2,5 @@
 {% load mptt_tags %}
 
 {% block content %}
-
-
-{% load mptt_tags %}
-<ol >
-
-    {% recursetree genres %}
-
-        <li>
-            <a href="{% url "pro" ps=node.id %}">{{ node.title }}</a>
-                    {% if not node.is_leaf_node %}
-
-                                                <ol class="children">
-                                         {{ children }}
-                                                </ol>
-                     {% endif %}
-        </li>
-
-    {% endrecursetree %}
-
-</ol>
-
-
+    <di style="height: 100%"></di>
 {% endblock %}

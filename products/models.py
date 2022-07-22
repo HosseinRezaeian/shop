@@ -1,6 +1,5 @@
 from django.db import models
-from mptt.models import MPTTModel, TreeForeignKey,TreeManyToManyField
-
+from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 
 
 class category(MPTTModel):
@@ -9,7 +8,14 @@ class category(MPTTModel):
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
-        return '{0} <<<< {1}'.format(self.title,self.parent)
+        return '{0} <<<< {1}'.format(self.title, self.parent)
+
+
+class brand(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
 
 
 # Create your models here.
@@ -20,6 +26,7 @@ class product(models.Model):
     title = models.CharField(max_length=30)
     category1 = models.ForeignKey(category, default=True, on_delete=models.CASCADE, null=True, blank=True,
                                   related_name='gat')
+    brand = models.ForeignKey(brand, on_delete=models.CASCADE, null=True, blank=True, default="null")
     price = models.IntegerField()
     discripion = models.CharField(max_length=300)
     slug = models.SlugField(max_length=30)
