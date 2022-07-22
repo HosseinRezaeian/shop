@@ -108,7 +108,7 @@ class forgetV(View):
             user_email = forget_form.cleaned_data.get('email')
             user: User = User.objects.filter(email__iexact=user_email).first()
             if user is not None:
-                send_email('فعالسازی حساب کاربری', user.email, {'user': user}, 'forgetpas1.html')
+                send_email('بازیابی کلمه عبور', user.email, {'user': user}, 'forgetpas1.html')
                 return redirect(reverse('login'))
         context = {
             'forget_form': forget_form
