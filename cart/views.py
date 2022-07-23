@@ -1,8 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from products.models import product
 from .models import order, order_details
-
-
+from django.views import View
 from django.shortcuts import render
 
 
@@ -29,5 +28,28 @@ def usercart(request: HttpRequest):
 
     else:
         print('is not login')
-    return HttpResponse('hello')
+    current_user = request.user
+    count_prodact_cart = ''
 
+    if str(current_user) != "AnonymousUser":
+
+        order_v = order.objects.get(user_id=current_user.id)
+        ps = product.objects.get(title=request.GET.get('np'))
+
+        or_d = order_details.objects.filter(order=order_v, product=ps).first()
+        if or_d is not None:
+            count_prodact_cart = or_d.countp
+        else:
+            count_prodact_cart = ''
+        return render(request, 'counter.html', {'count_cart': count_prodact_cart})
+    return HttpResponse('response')
+
+
+class cart_shoping(View):
+    def get(self, request):
+        current_user = request.user
+
+        if str(current_user) != "AnonymousUser":
+            user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
+
+            return render(request, 'cart_shoper.html', { 'cart_shop': user_open})

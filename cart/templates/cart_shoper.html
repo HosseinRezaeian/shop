@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+     <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+<style>
+.div_org{
+    height:100%;
+    margin-bottom:20%;
+
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+    height=100%;
+    margin-right: 5%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+    <div class="div_org" >
+
+
+<table dir="ltr">
+  <tr>
+    <th>محصول</th>
+    <th>تعداد</th>
+    <th>قیمت</th>
+  </tr>
+{% for dit in cart_shop.order_details_set.all %}
+<tr>
+    <th>{{ dit.product.title }}</th>
+    <th>{{dit.countp}}</th>
+    <th>{{dit.product.price}}</th>
+</tr>
+{% endfor %}
+
+</table>
+</div>
+
+
+
+{% endblock %}

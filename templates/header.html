@@ -7,9 +7,13 @@
         <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
         <div class="topbar-r">
             <ul>
-                <li>{{ request.path }}</li>
+
                 <li>   <i class="fa-solid fa-phone-flip"> </i> شماره تماس:{{ lep.phone }}</li>
+
                 <li>   <a style=" text-decoration: none;color: #FFFFFF" href="#"><i class="fa-regular fa-envelope"></i> ایمیل: {{lep.email}}</a> </li>
+            {% if user.is_authenticated %}
+                <li><a style="color:#FFFFFF" href="{% url 'cart_shoping' %}"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                {% endif %}
             </ul>
 
 
@@ -52,6 +56,7 @@
 
                             {% if m1.sub_menu_id == m.id %}
                                 <li><a href="{% url m1.url_name %}">{{ m1.title }}</a></li>
+
                             {% endif %}
 
                         {% endfor %}
@@ -61,6 +66,9 @@
                 {% endfor %}
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">logout</a></li>
+                 <li><a style="color:rgb(247, 6, 54)" href="{% url 'cart_shoping' %}"><i class="fa-solid fa-cart-shopping"></i>
+                     </a></li>
+
 
                 {% else %}
                             <li><a href="{% url 'signup' %}">register</a>
@@ -68,10 +76,13 @@
 
                                 <li><a href="{% url 'login' %}">login</a></li>
                                 <li><a href="{% url 'signup' %}">sign-up</a></li>
+                </li>
 
 
 
-                        </ul></li>
+
+                        </ul>
+
 
 
 

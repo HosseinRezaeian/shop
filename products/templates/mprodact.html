@@ -4,10 +4,14 @@
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+ <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 
 <style>
+.bt{
+    background-color: rgb(247, 6, 54);
 
+}
 .fr {
 
     left:0;
@@ -59,15 +63,6 @@ float: left}
         {{ ps.price }}
         <br>
         {{ ps.discripion }}
-        <br>
-        {% if ps.pic1 is  No %}
-yes
-
-            {% else %}
-
-no
-
-        {% endif %}
 
     </div>
 {#slider#}
@@ -124,18 +119,23 @@ no
 
 <div style="margin-top: 10%">
     {% if user.is_authenticated %}
-            <input min="1" default="1" type="number" name="email" required="" id="id_email">
-<button onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
-        <h3> {{ count_cart }} </h3>
+        <input  id="name_pro" type="hidden" value="{{ ps.title }}">
+            <input style="width:4%;border:solid 1px chocolate; " min="1" default="1" type="number" name="email" required="" id="id_email">
+<button class="bt" onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
+        <span id="count_prodact" ><i class="fa-solid fa-cart-circle-check"></i> {{ count_cart }} </span>
     <script>
     function add(pro) {
         const im=$("#id_email").val();
+        const np=$("#name_pro").val();
 
  console.log(pro);
 $.get("{% url 'cart' %}",{
-    im,pro
+    im,pro,np
+
 }).then(result => {
     console.log(result);
+    console.log(np);
+    $('#count_prodact').html(result);
 });
 
 
