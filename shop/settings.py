@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'register',
     'hcf',
     'fontawesomefree',
+    'django_template_maths',
 
     'captcha',
 ]

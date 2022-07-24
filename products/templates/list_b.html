@@ -11,10 +11,17 @@
                     <div class="item">
             <div class="card">
                 <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
-                <h1>{{ i.title }}</h1>
+                <h1 dir="rtl" style="
+                text-align: center;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 300px;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;">{{ i.title }}</h1>
                 <p class="price">${{ i.price }}</p>
                 <p>Some text about the jeans..</p>
-                <p><a href="{% url 'mp' catp1=g3.title pr=i.slug %}"><button>Add to Cart</button></a></p>
+                <p><a href="{% url 'mp' catp1=g3.title pr=i.slug %}"><button>مشاهده محصول</button></a></p>
             </div>
         </div>
 
@@ -26,7 +33,14 @@
                                 <div class="item">
             <div class="card">
                 <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
-                <h1>{{ i.title }}</h1>
+                <h1 style="
+    text-align: right;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;">{{ i.title }}</h1>
                 <p class="price">${{ i.price }}</p>
                 <p>Some text about the jeans..</p>
                 <p><a href="{% url 'mp' catp1=g.id pr=i.slug %}"><button>Add to Cart</button></a></p>

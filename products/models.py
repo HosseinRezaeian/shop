@@ -5,6 +5,7 @@ from mptt.models import MPTTModel, TreeForeignKey, TreeManyToManyField
 class category(MPTTModel):
     title = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
+    pic = models.ImageField(null=True, blank=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
@@ -13,6 +14,7 @@ class category(MPTTModel):
 
 class brand(models.Model):
     title = models.CharField(max_length=50)
+    pic = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -31,6 +33,8 @@ class product(models.Model):
     discripion = models.CharField(max_length=300)
     slug = models.SlugField(max_length=30)
     is_active = models.BooleanField(default=True)
+    is_discount = models.BooleanField(default=False)
+    last_price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -55,3 +59,10 @@ class report(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class discount(models.Model):
+    dis = models.IntegerField()
+
+    def __str__(self):
+        return str(self.dis)

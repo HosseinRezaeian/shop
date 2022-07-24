@@ -142,6 +142,7 @@ padding: 15px !important;
     font-family: arial;
     margin-right: 30px;
     margin-bottom: 30px;
+
   }
 
   .price {
@@ -187,4 +188,13 @@ footer{
 
 .footer .row{
     display: flex;
+}
+.one-line-text {
+    text-align: right;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 270px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }

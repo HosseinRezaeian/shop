@@ -1,0 +1,19 @@
+{% load django_template_maths %}
+<table id="tb" dir="ltr">
+  <tr>
+    <th>محصول</th>
+    <th>تعداد</th>
+    <th>قیمت</th>
+      <th>مجموع قیمت</th>
+  </tr>
+{% for dit in cart_shop.order_details_set.all %}
+<tr >
+    <th>{{ dit.product.title }}</th>
+    <th> <input id="id_p" value="{{ dit.id }}" type="hidden"> <input  id="num{{ dis.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number"><button onclick="savecount('num{{ dis.id }}')" >ذخیره</button> </th>
+    <th>{{dit.product.price}}</th>
+    <th>{{dit.countp|mul:dit.product.price}}</th>
+    <th><a onclick="add({{ dit.id }})">حذف</a></th>
+</tr>
+{% endfor %}
+
+</table>

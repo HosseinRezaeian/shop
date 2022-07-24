@@ -5,7 +5,7 @@ from cart.models import order, order_details
 from .forms import opin
 from .forms import repo
 from .models import category
-from .models import product
+from .models import product,discount
 from django.contrib.sites.shortcuts import get_current_site
 
 
@@ -14,6 +14,9 @@ def index(request):
 
 
 def home(request):
+    di=str(discount.objects.all().first())
+    print(di)
+
     return render(request, 'index.html')
 
 

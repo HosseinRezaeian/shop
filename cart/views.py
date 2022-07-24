@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, JsonResponse
 from products.models import product
 from .models import order, order_details
 from django.views import View
@@ -52,4 +52,41 @@ class cart_shoping(View):
         if str(current_user) != "AnonymousUser":
             user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
 
-            return render(request, 'cart_shoper.html', { 'cart_shop': user_open})
+            return render(request, 'cart_shoper.html', {'cart_shop': user_open})
+
+
+def shoper_par(request: HttpRequest):
+    ditail_id = request.GET.get('ditail_id')
+    if ditail_id is None:
+        return JsonResponse({'status': 'cant2 found'})
+    user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
+    ditail_obj = user_open.order_details_set.filter(id=ditail_id).first()
+    print(ditail_obj)
+    if ditail_obj is None:
+
+        return render(request, 'cart_shop_pa.html', {'cart_shop': user_open})
+    else:
+        ditail_obj.delete()
+        user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
+    return render(request, 'cart_shop_pa.html', {'cart_shop': user_open})
+
+    return HttpResponse('response')
+
+
+def save_count(request: HttpRequest):
+    num = request.GET.get('num')
+    id_p = request.GET.get('id_p')
+
+    if id_p is None:
+        return JsonResponse({'status': 'id_p'})
+        if num is None:
+            return JsonResponse({'status': 'num'})
+    ditail = order_details.objects.filter(id=id_p, order__user_id=request.user.id, order__is_paid=False).first()
+    print(ditail)
+    if ditail is None:
+        return JsonResponse({'status': 'cant found ditail'})
+    ditail.countp = num
+    ditail.save()
+    user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
+    return render(request, 'cart_shop_pa.html', {'cart_shop': user_open})
+    return HttpResponse('response')
