@@ -89,7 +89,7 @@ def mp(request, catp1, pr):
 
         if str(current_user) != "AnonymousUser":
 
-            order_v = order.objects.get(user_id=current_user.id)
+            order_v , created = order.objects.get_or_create(is_paid=False, user_id=request.user)
             ps = product.objects.get(slug=pr)
 
             or_d = order_details.objects.filter(order=order_v,product=ps).first()

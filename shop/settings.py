@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'django_template_maths',
 
+    'azbankgateways',
+
     'captcha',
 ]
 
@@ -139,3 +141,31 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'exhozr@gmail.com'
 EMAIL_HOST_PASSWORD = 'atgtrhvzswwdxtvv'
 EMAIL_PORT = 587
+
+
+
+
+
+
+
+
+
+AZ_IRANIAN_BANK_GATEWAYS = {
+   'GATEWAYS': {
+       'IDPAY': {
+           'MERCHANT_CODE': 'f10d4324-03ab-4814-987e-c26adb902fa3',
+           'METHOD': 'POST',  # GET or POST
+           'X_SANDBOX': 1,  # 0 disable, 1 active
+       },
+
+   },
+   'IS_SAMPLE_FORM_ENABLE': True, # اختیاری و پیش فرض غیر فعال است
+   'DEFAULT': 'IDPAY',
+   'CURRENCY': 'IRR', # اختیاری
+   'TRACKING_CODE_QUERY_PARAM': 'tc', # اختیاری
+   'TRACKING_CODE_LENGTH': 16, # اختیاری
+   'SETTING_VALUE_READER_CLASS': 'azbankgateways.readers.DefaultReader', # اختیاری
+   'BANK_PRIORITIES': [
+
+   ], # اختیاری
+}

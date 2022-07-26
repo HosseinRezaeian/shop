@@ -15,7 +15,7 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 90%;
-    height=100%;
+    height:100%;
     margin-right: 5%;
 }
 
@@ -29,28 +29,52 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 </style>
-    <div class="div_org" >
+    <div id="tb" class="div_org" >
 
 
-<table id="tb" dir="ltr">
+<table  dir="ltr">
   <tr>
     <th>محصول</th>
     <th>تعداد</th>
     <th>قیمت</th>
-      <th>مجموع قیمت</th>
+      <th>مجموع قیمت محصولات</th>
   </tr>
+
 {% for dit in cart_shop.order_details_set.all %}
 <tr >
     <th>{{ dit.product.title }}</th>
     <th> <input id="id_p" value="{{ dit.id }}" type="hidden"> <input  id="num{{ dis.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number"><button onclick="savecount('num{{ dis.id }}')" >ذخیره</button> </th>
     <th>{{dit.product.price}}</th>
+
+
     <th>{{dit.countp|mul:dit.product.price}}</th>
-    <th><a onclick="add({{ dit.id }})">حذف</a></th>
+    <th><a onclick="add({{ dit.id }})"><button>حذف</button></a></th>
 </tr>
+
+
 {% endfor %}
 
+<tr>
+    <th></th>
+    <th></th>
+    <th>مجموع قیمت سبد خرید:</th>
+    <th>{{ multi }}</th>
+</tr>
+
+
+
 </table>
+<a href="{% url 'gateway' %}"><button >پرداخت</button></a>
 </div>
+
+
+
+
+
+
+
+
+
     <script>
     function add(dit_id) {
 
@@ -89,6 +113,24 @@ function savecount(id) {
 
     $('#tb').html(result);
 });
+
+}
+
+
+
+function mulprice(mult) {
+
+
+    console.log(mult);
+    $.get("{% url 'gateway' %}",{mult}).then(result => {console.log(result);
+
+
+
+});
+
+
+
+
 
 }
 
