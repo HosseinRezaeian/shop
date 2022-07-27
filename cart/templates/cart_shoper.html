@@ -5,6 +5,8 @@
 {% block content %}
      <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
         <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
 <style>
 .div_org{
     height:100%;
@@ -29,7 +31,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 </style>
-    <div id="tb" class="div_org" >
+     <div id="tb" class="div_org" >
 
 
 <table  dir="ltr">
@@ -43,8 +45,21 @@ tr:nth-child(even) {
 {% for dit in cart_shop.order_details_set.all %}
 <tr >
     <th>{{ dit.product.title }}</th>
-    <th> <input id="id_p" value="{{ dit.id }}" type="hidden"> <input  id="num{{ dis.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number"><button onclick="savecount('num{{ dis.id }}')" >ذخیره</button> </th>
-    <th>{{dit.product.price}}</th>
+    <th> <input id="id_p" value="{{ dit.id }}" type="hidden">
+        <input  id="num{{ dit.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number">
+        <button onclick="savecount('num{{ dit.id }}',{{ dit.id }});" >ذخیره</button> </th>
+    <th>
+        {% if dit.product.is_discount is True %}
+           <del>{{ dit.product.last_price }}</del>
+            <small style="color: #f12c2c">%{{ dit.product.cent }}</small>
+
+        <b style="color: forestgreen"> {{dit.product.price}}</b>
+            {% else %}
+           <b style="color: forestgreen"> {{dit.product.price}}</b>
+        {% endif %}
+
+
+    </th>
 
 
     <th>{{dit.countp|mul:dit.product.price}}</th>
@@ -76,7 +91,37 @@ tr:nth-child(even) {
 
 
     <script>
-    function add(dit_id) {
+
+
+
+
+function savecount(id,id_dit) {
+
+
+
+
+    const num = $('#'+id).val();
+
+
+    console.log(id);
+    console.log(num);
+    console.log(id_dit);
+    $.get("{% url 'save_count' %}",
+
+        {id_dit,num}).then(result => {
+
+
+    $('#tb').html(result);});
+
+
+
+
+}
+
+
+
+
+ function add(dit_id) {
 
 
  console.log(dit_id);
@@ -91,51 +136,6 @@ $.get("{% url 'remove_cart' %}",{
 
 
 }
-
-
-
-function savecount(id) {
-
-
-    const num = $("#num").val();
-    const id_p = $("#id_p").val();
-
-
-    console.log(num);
-    console.log(id_p);
-
-
-    $.get("{% url 'save_count' %}",{
-    num,id_p
-
-}).then(result => {
-    console.log(result);
-
-    $('#tb').html(result);
-});
-
-}
-
-
-
-function mulprice(mult) {
-
-
-    console.log(mult);
-    $.get("{% url 'gateway' %}",{mult}).then(result => {console.log(result);
-
-
-
-});
-
-
-
-
-
-}
-
-
-
 
 </script>
 

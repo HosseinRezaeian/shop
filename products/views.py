@@ -5,7 +5,7 @@ from cart.models import order, order_details
 from .forms import opin
 from .forms import repo
 from .models import category
-from .models import product,discount
+from .models import product, discount
 from django.contrib.sites.shortcuts import get_current_site
 
 
@@ -14,10 +14,18 @@ def index(request):
 
 
 def home(request):
-    di=str(discount.objects.all().first())
-    print(di)
+    prodacts_discounts = product.objects.filter(is_discount=True)
+    c=0
+    for i in prodacts_discounts:
+        if i.id > c:
+            c=i.id
+            print(c)
 
-    return render(request, 'index.html')
+
+
+    count_discounts = prodacts_discounts.count()
+
+    return render(request, 'index.html', {'prodact_discount': prodacts_discounts, 'count': count_discounts,'ip':c})
 
 
 # # Create your views here.
@@ -85,27 +93,24 @@ def mp(request, catp1, pr):
         form = opin()
         form2 = repo()
         current_user = request.user
-        count_prodact_cart=''
+        count_prodact_cart = ''
 
         if str(current_user) != "AnonymousUser":
 
-            order_v , created = order.objects.get_or_create(is_paid=False, user_id=request.user)
+            order_v, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
             ps = product.objects.get(slug=pr)
 
-            or_d = order_details.objects.filter(order=order_v,product=ps).first()
+            or_d = order_details.objects.filter(order=order_v, product=ps).first()
             if or_d is not None:
-                count_prodact_cart=or_d.countp
+                count_prodact_cart = or_d.countp
             else:
-                count_prodact_cart=''
-
-
-
-
+                count_prodact_cart = ''
 
     ps = product.objects.get(slug=pr)
     op = Opinion.objects.all().order_by('-id')
 
-    return render(request, 'mprodact.html', {'ps': ps, 'form': form, 'op': op, 'form2': form2,'count_cart':count_prodact_cart})
+    return render(request, 'mprodact.html',
+                  {'ps': ps, 'form': form, 'op': op, 'form2': form2, 'count_cart': count_prodact_cart})
 
 
 def cp(request, ps1, catp):

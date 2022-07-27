@@ -13,8 +13,21 @@
 {% for dit in cart_shop.order_details_set.all %}
 <tr >
     <th>{{ dit.product.title }}</th>
-    <th> <input id="id_p" value="{{ dit.id }}" type="hidden"> <input  id="num{{ dis.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number"><button onclick="savecount('num{{ dis.id }}')" >ذخیره</button> </th>
-    <th>{{dit.product.price}}</th>
+    <th> <input id="id_p" value="{{ dit.id }}" type="hidden">
+        <input  id="num{{ dit.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number">
+        <button onclick="savecount('num{{ dit.id }}',{{ dit.id }});" >ذخیره</button> </th>
+    <th>
+        {% if dit.product.is_discount is True %}
+           <del>{{ dit.product.last_price }}</del>
+            <small style="color: #f12c2c">%{{ dit.product.cent }}</small>
+
+        <b style="color: forestgreen"> {{dit.product.price}}</b>
+            {% else %}
+           <b style="color: forestgreen"> {{dit.product.price}}</b>
+        {% endif %}
+
+
+    </th>
 
 
     <th>{{dit.countp|mul:dit.product.price}}</th>

@@ -20,7 +20,6 @@ class slugi(admin.ModelAdmin):
         from math import ceil
         discount1 = int(str(discount.objects.all().first()))
 
-
         for pro in product:
             if pro.is_discount is False:
                 multiplier = discount1 / 100.  # discount / 100 in python 3
@@ -28,11 +27,12 @@ class slugi(admin.ModelAdmin):
                 new_price = ceil(old_price - (old_price * multiplier))
                 pro.price = new_price
                 pro.is_discount = True
+                pro.cent = discount1
                 pro.save()
 
     discount2 = discount.objects.all().first()
 
-    dis.short_description = 'Set {} discount'.format(str(discount2))
+    dis.short_description = 'Set ' + str(discount2) + ' discount'
 
     def no_dis(self, request, product):
 
@@ -40,6 +40,7 @@ class slugi(admin.ModelAdmin):
             if pro.is_discount is True:
                 pro.price = pro.last_price
                 pro.is_discount = False
+                pro.cent = 0
                 pro.save()
 
     no_dis.short_description = 'finished discount'

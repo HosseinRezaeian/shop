@@ -1,26 +1,9 @@
-{% extends 'base.html' %}
-
-{% block content%}
-
-<div>
-<!-- Latest compiled and minified CSS -->
-<!-- https://xstore.8theme.com/demos/hosting/-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&subset=latin-ext" rel="stylesheet">
-<style>
-    #slider-text{
+#slider-text{
   padding-top: 40px;
   display: block;
 }
 #slider-text .col-md-6{
   overflow: hidden;
-    color: #f12c2c;
 }
 
 #slider-text h2 {
@@ -182,101 +165,3 @@
     left: 0;
   }
 }
-</style>
-
-{% if prodact_discount is not None %}
-
-<!--Item slider text-->
-<h1 class="text-center"></h1>
-<div class="container">
-  <div class="row" id="slider-text">
-    <div class="col-md-6" >
-      <h2>تخفیف شگفت انگیز !!!</h2>
-    </div>
-  </div>
-</div>
-
-<!-- Item slider-->
-<div class="container-fluid">
-
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-      <div class="carousel carousel-showmanymoveone slide" id="itemslider">
-        <div class="carousel-inner">
-
-
-
-
-            {% for pd in prodact_discount %}
-                {% if pd.id == ip %}
-                    <div class="item active">
-                     <div class="col-xs-12 col-sm-6 col-md-2">
-              <a href="{% url 'mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
-              <span class="badge">{{ pd.cent }}%</span>
-              <h4 class="text-center">{{ pd.title }}</h4>
-              <h5 class="text-center">{{pd.price}} تومان</h5>
-              <h6 class="text-center">{{ pd.last_price }}تومان</h6>
-            </div>
-                </div>
-                    {% else %}
-                     <div class="item">
-            <div class="col-xs-12 col-sm-6 col-md-2">
-              <a href="{% url 'mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
-              <span class="badge">{{ pd.cent }}%</span>
-              <h4 class="text-center">{{ pd.title }}</h4>
-              <h5 class="text-center">{{pd.price}} تومان</h5>
-              <h6 class="text-center">{{ pd.last_price }} تومان</h6>
-            </div>
-          </div>
-                {% endif %}
-
-
-
-
-            {% endfor %}
-
-
-        </div>
-
-        <div id="slider-control">
-        <a class="left carousel-control" href="#itemslider" data-slide="prev"><img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_402-512.png" alt="Left" class="img-responsive"></a>
-        <a class="right carousel-control" href="#itemslider" data-slide="next"><img src="http://pixsector.com/cache/81183b13/avcc910c4ee5888b858fe.png" alt="Right" class="img-responsive"></a>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Item slider end-->
-
-
-
-</div>
-     <script>
-     $(document).ready(function(){
-
-  $('#itemslider').carousel({ });
-
-  $('.carousel-showmanymoveone .item').each(function(){
-  var itemToClone = $(this);
-
-  for (var i=1;i<{{ count }};i++) {
-  itemToClone = itemToClone.next();
-
-  if (!itemToClone.length) {
-  itemToClone = $(this).siblings(':first');
-  }
-
-  itemToClone.children(':first-child').clone()
-  .addClass("cloneditem-"+(i))
-  .appendTo($(this));
-  }
-  });
-  });
-  </script>
-    {% endif %}
-
-
-
-
-
-{% endblock %}

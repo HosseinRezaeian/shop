@@ -90,18 +90,21 @@ def shoper_par(request: HttpRequest):
 
 def save_count(request: HttpRequest):
     num = request.GET.get('num')
-    id_p = request.GET.get('id_p')
+    id_p = request.GET.get('id_dit')
 
     if id_p is None:
         return JsonResponse({'status': 'id_p'})
         if num is None:
             return JsonResponse({'status': 'num'})
     ditail = order_details.objects.filter(id=id_p, order__user_id=request.user.id, order__is_paid=False).first()
+    print(ditail.product)
 
     if ditail is None:
         return JsonResponse({'status': 'cant found ditail'})
     ditail.countp = num
+    print(ditail.countp)
     ditail.save()
+    print(ditail.countp)
     user_open, created = order.objects.get_or_create(is_paid=False, user_id=request.user)
     cart_shop = user_open.order_details_set.all()
     mul = 0

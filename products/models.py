@@ -28,6 +28,7 @@ class product(models.Model):
     title = models.CharField(max_length=30)
     category1 = models.ForeignKey(category, default=True, on_delete=models.CASCADE, null=True, blank=True,
                                   related_name='gat')
+    number = models.IntegerField(blank=True, null=True,default=0)
     brand = models.ForeignKey(brand, on_delete=models.CASCADE, null=True, blank=True, default="null")
     price = models.IntegerField()
     discripion = models.CharField(max_length=300)
@@ -35,6 +36,7 @@ class product(models.Model):
     is_active = models.BooleanField(default=True)
     is_discount = models.BooleanField(default=False)
     last_price = models.IntegerField(null=True, blank=True)
+    cent = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.title
