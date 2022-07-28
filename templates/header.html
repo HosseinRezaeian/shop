@@ -8,9 +8,9 @@
         <div class="topbar-r">
             <ul>
 
-                <li>   <i class="fa-solid fa-phone-flip"> </i> شماره تماس:{{ lep.phone }}</li>
+                <li style="font-family:'Harmattan', 'Oswald', sans-serif;">   <i class="fa-solid fa-phone-flip"> </i> شماره تماس:{{ lep.phone }}</li>
 
-                <li>   <a style=" text-decoration: none;color: #FFFFFF" href="#"><i class="fa-regular fa-envelope"></i> ایمیل: {{lep.email}}</a> </li>
+                <li style="font-family:  'Harmattan','Oswald', sans-serif;">   <a style=" text-decoration: none;color: #FFFFFF" href="#"><i class="fa-regular fa-envelope"></i> ایمیل: {{lep.email}}</a> </li>
             {% if user.is_authenticated %}
                 <li><a style="color:#FFFFFF" href="{% url 'cart_shoping' %}"><i class="fa-solid fa-cart-shopping"></i></a></li>
                 {% endif %}
@@ -50,12 +50,12 @@
                 {% for m in menu %}
                     {% if m.sub_menu_id is null %}
 
-                <li><a href="{% url m.url_name %}">{{ m.title }}</a>
+                <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url m.url_name %}">{{ m.title }}</a>
                 <ul>
                         {% for m1 in menu %}
 
                             {% if m1.sub_menu_id == m.id %}
-                                <li><a href="{% url m1.url_name %}">{{ m1.title }}</a></li>
+                                <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url m1.url_name %}">{{ m1.title }}</a></li>
 
                             {% endif %}
 
@@ -65,17 +65,17 @@
 
                 {% endfor %}
             {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">logout</a></li>
+                <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url 'logout' %}">خروج</a></li>
                  <li><a style="color:rgb(247, 6, 54)" href="{% url 'cart_shoping' %}"><i class="fa-solid fa-cart-shopping"></i>
                      </a></li>
 
 
                 {% else %}
-                            <li><a href="{% url 'signup' %}">register</a>
+                            <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url 'signup' %}">ثبت نام/ورود</a>
                 <ul>
 
-                                <li><a href="{% url 'login' %}">login</a></li>
-                                <li><a href="{% url 'signup' %}">sign-up</a></li>
+                                <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url 'login' %}">ورود</a></li>
+                                <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url 'signup' %}">ثبت نام</a></li>
                 </li>
 
 

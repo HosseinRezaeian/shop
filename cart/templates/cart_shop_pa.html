@@ -13,9 +13,9 @@
 {% for dit in cart_shop.order_details_set.all %}
 <tr >
     <th>{{ dit.product.title }}</th>
-    <th> <input id="id_p" value="{{ dit.id }}" type="hidden">
-        <input  id="num{{ dit.id }}"  style="width:8%;border:solid 1px chocolate; " min="1" value="{{ dit.countp }}" type="number">
-        <button onclick="savecount('num{{ dit.id }}',{{ dit.id }});" >ذخیره</button> </th>
+    <th> <input id="id_p{{ dit.id }}" value="{{ dit.product.number }}" type="hidden">
+        <input  id="num{{ dit.id }}"  style="width:20%;border:solid 1px chocolate; " min="1" max="{{ dit.product.number }}" value="{{ dit.countp }}" type="number">
+        <button onclick="savecount('num{{ dit.id }}',{{ dit.id }},'id_p{{ dit.id }}')" >ذخیره</button> </th>
     <th>
         {% if dit.product.is_discount is True %}
            <del>{{ dit.product.last_price }}</del>
@@ -47,5 +47,6 @@
 
 
 </table>
-<a href="{% url 'gateway' %}"><button >پرداخت</button></a>
+
+<a href="{% url 'gateway' %}"><button >پرداخت</button></a><span id="demo"></span>
 </div>

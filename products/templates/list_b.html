@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% block content %}
+
     <div style="margin-top: 10%">
     {% for g in f1 %}
         <a href="{% url "pro" ps=g.id %}">{{ g.title }}</a>
@@ -19,8 +21,12 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;">{{ i.title }}</h1>
-                <p class="price">${{ i.price }}</p>
-                <p>Some text about the jeans..</p>
+                <p class="price">{{ i.price }}تومان</p>
+                {% if i.is_discount is True %}
+                <p><del>{{ i.last_price }}</del><small style="color: #f12c2c">{{ i.cent }}%</small></p>
+                    {% else %}
+                    <p>  ...  </p>
+                    {% endif %}
                 <p><a href="{% url 'mp' catp1=g3.title pr=i.slug %}"><button>مشاهده محصول</button></a></p>
             </div>
         </div>
@@ -28,26 +34,6 @@
 
 
     {% endif %}
-    {% for g in f1 %}
-        {% if i.category1_id|slugify == g.id|slugify  %}
-                                <div class="item">
-            <div class="card">
-                <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
-                <h1 style="
-    text-align: right;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 20px;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;">{{ i.title }}</h1>
-                <p class="price">${{ i.price }}</p>
-                <p>Some text about the jeans..</p>
-                <p><a href="{% url 'mp' catp1=g.id pr=i.slug %}"><button>Add to Cart</button></a></p>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
     {% endfor %}
 
 </section>

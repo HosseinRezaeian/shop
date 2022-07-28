@@ -46,10 +46,10 @@ INSTALLED_APPS = [
     'django_template_maths',
 
     'azbankgateways',
-
     'captcha',
-]
 
+]
+USE_THOUSAND_SEPARATOR = True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

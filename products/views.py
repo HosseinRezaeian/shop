@@ -15,17 +15,17 @@ def index(request):
 
 def home(request):
     prodacts_discounts = product.objects.filter(is_discount=True)
-    c=0
+    c = 0
     for i in prodacts_discounts:
         if i.id > c:
-            c=i.id
+            c = i.id
             print(c)
 
-
-
     count_discounts = prodacts_discounts.count()
+    cat = category.objects.filter(level=0)
 
-    return render(request, 'index.html', {'prodact_discount': prodacts_discounts, 'count': count_discounts,'ip':c})
+    return render(request, 'index.html',
+                  {'category': cat, 'prodact_discount': prodacts_discounts, 'count': count_discounts, 'ip': c})
 
 
 # # Create your views here.

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
@@ -56,13 +57,13 @@ float: left}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'cmsh.css' %}">
-<div style="margin-bottom: 10%;block:inline-block; height:100%;margin-right: 2%;margin-left: 2%;">
+<div style="block:inline-block; height:100%;margin-right: 2%;margin-left: 2%;">
     <div style="width: 50%; float:right;height:100%;">
-       {{ ps.title }}
+      <h1>{{ ps.title }}</h1>
            <br>
-        {{ ps.price }}
-        <br>
-        {{ ps.discripion }}
+
+
+       <p>{{ ps.discripion }}</p>
 
     </div>
 {#slider#}
@@ -114,35 +115,62 @@ float: left}
                           <span class="sr-only">Next</span>
                         </a>
                       </div>
-                </div>
-
-
-<div style="margin-top: 10%">
+                    <div style="margin-top: 10%">
     {% if user.is_authenticated %}
         <input  id="name_pro" type="hidden" value="{{ ps.title }}">
-            <input style="width:4%;border:solid 1px chocolate; " min="1" default="1" type="number" name="email" required="" id="id_email">
+            <input style="width:4%;border:solid 1px chocolate; " max="{{ ps.number }}" min="1" default="1" type="number" name="email" required="" id="id_email">
 <button class="bt" onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
-        <span id="count_prodact" ><i class="fa-solid fa-cart-circle-check"></i> {{ count_cart }} </span>
+        <div id="count_prodact">
+        <input id="count_cart" type="hidden" value="{{ count_cart }}">
+        <span  ><i class="fa-solid fa-cart-circle-check"></i> {{ count_cart }} </span>
+            </div>
+        <p id="demo"></p>
     <script>
     function add(pro) {
         const im=$("#id_email").val();
         const np=$("#name_pro").val();
+        const a=$("#count_cart").val();
 
- console.log(pro);
+ {#console.log({{ ps.number }});#}
+ {# console.log(np);#}
+        var c=parseInt(a);
+        var i=parseInt(im)
+    if (isNaN(i)){
+        console.log(i);
+    }
+     if (isNaN(c)){
+        var c=0;
+    }
+
+
+  var con=  i+c;
+console.log(c);
+
+ if(im <= {{ ps.number }} && con <= {{ ps.number }} ){
 $.get("{% url 'cart' %}",{
     im,pro,np
 
 }).then(result => {
-    console.log(result);
-    console.log(np);
+    {#console.log(result);#}
+    {#console.log(np);#}
     $('#count_prodact').html(result);
 });
+
+ }else {
+     document.getElementById("demo").innerHTML = "!!بیشتر از موجودی انبار";
+ }
+
 
 
 }
 
 </script>
 </div>
+                </div>
+
+
+
+
 
 {% endif %}
 </div>

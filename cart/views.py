@@ -130,7 +130,7 @@ def go_to_gateway_view(request: HttpRequest):
         if mul != 0:
 
             # خواندن مبلغ از هر جایی که مد نظر است
-            amount = mul
+            amount = mul * 10
 
             # تنظیم شماره موبایل کاربر از هر جایی که مد نظر است
             # اختیاری
@@ -156,8 +156,6 @@ def go_to_gateway_view(request: HttpRequest):
                 logging.critical(e)
                 # TODO: redirect to failed page.
                 raise e
-
-
 
 
 # Create your views here.
@@ -194,13 +192,14 @@ def callback_gateway_view(request):
             is_paider.is_paid = True
             today = date.today()
             is_paider.pay_time = today
+            is_paider.tracking_code = bank_record.tracking_code
             finall_ditail.final_price = mul
             finall_ditail.save()
             is_paider.save()
-            hap='پرداخت با موفقیت انجام شد.'
-            return render(request, 'callback_isnot_success.html',{'text':hap})
+            hap = bank_record.tracking_code
 
+            return render(request, 'callback_is_success.html', {'text': hap})
 
     # پرداخت موفق نبوده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.
     hap = 'پرداخت موفق نبوده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.'
-    return render(request, 'callback_isnot_success.html', {'text': hap})
+    return render(request, 'callback_is_success.html', {'text': hap})

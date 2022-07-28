@@ -8,6 +8,7 @@ class order(models.Model):
     user_id = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     is_paid = models.BooleanField(default=False)
     pay_time = models.DateField(null=True, blank=True)
+    tracking_code = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.user_id)
