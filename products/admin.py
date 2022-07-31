@@ -22,6 +22,8 @@ class slugi(admin.ModelAdmin):
 
         for pro in product:
             if pro.is_discount is False:
+                pro.last_price = pro.price
+                pro.save()
                 multiplier = discount1 / 100.  # discount / 100 in python 3
                 old_price = pro.price
                 new_price = ceil(old_price - (old_price * multiplier))

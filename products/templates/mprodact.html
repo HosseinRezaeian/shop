@@ -116,7 +116,16 @@ float: left}
                         </a>
                       </div>
                     <div style="margin-top: 10%">
-    {% if user.is_authenticated %}
+
+                </div>
+
+
+
+
+
+
+</div>
+{% if user.is_authenticated %}
         <input  id="name_pro" type="hidden" value="{{ ps.title }}">
             <input style="width:4%;border:solid 1px chocolate; " max="{{ ps.number }}" min="1" default="1" type="number" name="email" required="" id="id_email">
 <button class="bt" onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
@@ -165,27 +174,28 @@ $.get("{% url 'cart' %}",{
 }
 
 </script>
-</div>
-                </div>
-
-
-
-
-
 {% endif %}
 </div>
-
 
 <div class="command" >
 
 <form method="post" id="my_form" action="{{ request.path }}">
     {% csrf_token %}
-
-    {% for f in form %}
-            {{ f }}
-            {{ f.errors }}
+{% if user.is_authenticated %}
+<input type="hidden"  name="namef" value="{{ user.username }}">
+<input type="hidden"  name="email_f" value="{{ user.email }}" >
+{% for f in form  %}
+    {{ f }}
+    {{ f.errors }}
     {% endfor %}
-
+{% else %}
+    <input type="text" placeholder="نام"   class="filed_f" name="namef" required>
+<input type="email" placeholder="ایمیل"  class="filed_f" name="email_f" required>
+{% for f in form  %}
+    {{ f }}
+    {{ f.errors }}
+    {% endfor %}
+{% endif %}
 
     <input type="hidden" id="v1" name="prodactf" value="{{ ps.id }}">
     <input type="hidden" name="path" value="{{ request.path }}">
@@ -222,9 +232,20 @@ $.get("{% url 'cart' %}",{
 <div class="fr">
 <form method="post" action="{{ request.path }}">
     {% csrf_token %}
-    {{ form2 }}
+    {% if user.is_authenticated %}
+    <input type="hidden" name="name_f" value="{{ user.username }}">
+    <input type="hidden" name="email_f"  value="{{ user.email }}">
+    <input type="text" placeholder="متن رپورت"  name="text_f" required>
     <input type="hidden" name="path1" value="{{ request.path }}">
     <input type="hidden" name="idc" value="{{ o.id }}">
+        {% else %}
+
+    <input type="text" placeholder="نام"  name="name_f" required>
+    <input type="email" placeholder="ایمیل"  name="email_f" required>
+    <input type="text" placeholder="متن رپورت"  name="text_f" required>
+    <input type="hidden" name="path1" value="{{ request.path }}">
+    <input type="hidden" name="idc" value="{{ o.id }}">
+        {% endif %}
 <button class="but_sub" name="f2" type="submit">send</button>
 </form>
 

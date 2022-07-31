@@ -68,6 +68,8 @@
                 <li><a style="text-align:center;font-family: 'Noto Sans Arabic', sans-serif;" href="{% url 'logout' %}">خروج</a></li>
                  <li><a style="color:rgb(247, 6, 54)" href="{% url 'cart_shoping' %}"><i class="fa-solid fa-cart-shopping"></i>
                      </a></li>
+                <li><a style="color:rgb(247, 6, 54)" href="{% url 'profile' user_name=user.username %}"><i class="fa-solid fa-user"></i>
+                     </a></li>
 
 
                 {% else %}

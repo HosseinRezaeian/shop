@@ -53,8 +53,8 @@ def mp(request, catp1, pr):
 
             if form.is_valid():
                 # process the data in form.cleaned_data as required
-                cont = Opinion(name=form.cleaned_data.get('namef'),
-                               email=form.cleaned_data.get('emailf'),
+                cont = Opinion(name=request.POST['namef'],
+                               email=request.POST['email_f'],
                                title=form.cleaned_data.get('titlef'),
                                text_area=form.cleaned_data.get('text_arf'),
                                proda=request.POST['prodactf']
@@ -71,9 +71,9 @@ def mp(request, catp1, pr):
         elif 'f2' in request.POST:
             form2 = repo(request.POST)
             if form2.is_valid():
-                cont = report(name=form2.cleaned_data.get('name_f'),
-                              email=form2.cleaned_data.get('email_f'),
-                              text=form2.cleaned_data.get('text_f'),
+                cont = report(name=request.POST['name_f'],
+                              email=request.POST['email_f'],
+                              text=request.POST['text_f'],
 
                               id_c=request.POST['idc']
 

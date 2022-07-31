@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+{% block content %}
+
+
+<style>
+.div_org{
+    height:100%;
+    margin-bottom:20%;
+
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+    height:100%;
+    margin-right: 5%;
+}
+
+td, th {
+  border: 1px solid;
+  text-align: left;
+  padding: 8px;
+}
+
+
+</style>
+
+<style>
+
+
+
+th, td {
+  border-style:solid;
+  border-color: tomato;
+
+}
+table{
+    margin:auto;
+    width:70%;
+}
+</style>
+                               <table>
+ <tr>
+     <th>محصول</th>
+     <th>تعداد</th>
+ </tr>
+{% for i in order %}
+        {% for o in orm %}
+                {% if i.id == o.order_id %}
+                           {% for d in pr %}
+                                        {% if o.product_id == d.id %}
+                                                            <tr>
+                                                             <th >{{ d.title }}</th>
+                                                            <th style="width:30%">{{ o.countp }}</th>
+                                                            </tr>
+                                        {% endif  %}
+                           {% endfor %}
+
+                {% endif %}
+
+        {% endfor %}
+    <tr><th></th><th></th></tr>
+{% endfor %}
+
+</table>
+{% endblock %}

@@ -10,6 +10,6 @@ urlpatterns = [
     path('cart/save_count', views.save_count, name='save_count'),
     path('cart/request-pay', views.go_to_gateway_view, name='gateway'),
     path('cart/callback', views.callback_gateway_view, name='callback'),
-
+    path('user/<slug:user_name>', views.user, name='profile'),
 
 ]

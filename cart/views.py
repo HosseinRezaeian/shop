@@ -203,3 +203,14 @@ def callback_gateway_view(request):
     # پرداخت موفق نبوده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.
     hap = 'پرداخت موفق نبوده است. اگر پول کم شده است ظرف مدت ۴۸ ساعت پول به حساب شما بازخواهد گشت.'
     return render(request, 'callback_is_success.html', {'text': hap})
+
+
+def user(request, user_name):
+    order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True)
+
+    orm=order_details.objects.all()
+    pr=product.objects.all()
+
+
+
+    return render(request, 'profile.html', {'order': order_user,'orm':orm,'pr':pr})
