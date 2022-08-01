@@ -184,6 +184,12 @@ def callback_gateway_view(request):
         # می توانید کاربر را به صفحه نتیجه هدایت کنید یا نتیجه را نمایش دهید.
         is_paider = order.objects.get(user_id=current_user, is_paid=0)
         finall_ditail = order_details.objects.filter(final_price=None, order_id=is_paider.id).first()
+        finall_ditail2 = order_details.objects.filter(final_price=None, order_id=is_paider.id)
+
+        for dit in finall_ditail2:
+            prodact_dit = product.objects.get(id=dit.product_id)
+            prodact_dit.number = prodact_dit.number - dit.countp
+            prodact_dit.save()
 
         mul = 0
         for i in cart_shop:
@@ -196,6 +202,7 @@ def callback_gateway_view(request):
             finall_ditail.final_price = mul
             finall_ditail.save()
             is_paider.save()
+
             hap = bank_record.tracking_code
 
             return render(request, 'callback_is_success.html', {'text': hap})
@@ -207,10 +214,17 @@ def callback_gateway_view(request):
 
 def user(request, user_name):
     order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True)
+    orm = order_details.objects.filter(order__in=order_user.all())
+    oa = []
+    for id_e in order_user:
 
-    orm=order_details.objects.all()
-    pr=product.objects.all()
+        ore = order_details.objects.filter(order_id=id_e.id)
+        if str(ore) == '<QuerySet []>':
+            print(str(ore))
+        else:
+            oa.append(ore)
 
+    print(oa)
 
-
-    return render(request, 'profile.html', {'order': order_user,'orm':orm,'pr':pr})
+    # pr = product.objects.all()
+    return render(request, 'profile.html', {'order': order_user, 'orm': orm, 'oa': oa})

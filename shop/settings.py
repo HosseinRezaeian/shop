@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'hcf',
     'fontawesomefree',
     'django_template_maths',
-
     'azbankgateways',
     'captcha',
 

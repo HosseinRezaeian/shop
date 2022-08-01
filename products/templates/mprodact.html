@@ -125,7 +125,7 @@ float: left}
 
 
 </div>
-{% if user.is_authenticated %}
+{% if user.is_authenticated and ps.number > 0 %}
         <input  id="name_pro" type="hidden" value="{{ ps.title }}">
             <input style="width:4%;border:solid 1px chocolate; " max="{{ ps.number }}" min="1" default="1" type="number" name="email" required="" id="id_email">
 <button class="bt" onclick="add({{ ps.id }})">افزودن به سبد خرید</button>

@@ -39,28 +39,58 @@ table{
     width:70%;
 }
 </style>
-                               <table>
- <tr>
-     <th>محصول</th>
-     <th>تعداد</th>
- </tr>
-{% for i in order %}
-        {% for o in orm %}
-                {% if i.id == o.order_id %}
-                           {% for d in pr %}
-                                        {% if o.product_id == d.id %}
-                                                            <tr>
-                                                             <th >{{ d.title }}</th>
-                                                            <th style="width:30%">{{ o.countp }}</th>
-                                                            </tr>
-                                        {% endif  %}
-                           {% endfor %}
+{#                               <table>#}
+{# <tr>#}
+{#     <th>محصول</th>#}
+{#     <th>تعداد</th>#}
+{# </tr>#}
+{#{% for i in order %}#}
+{#        {% for o in orm %}#}
+{#                {% if i.id == o.order_id %}#}
+{#                           {% for d in pr %}#}
+{#                                        {% if o.product_id == d.id %}#}
+{#                                                            <tr>#}
+{#                                                             <th >{{ d.title }}</th>#}
+{#                                                            <th style="width:30%">{{ o.countp }}</th>#}
+{#                                                            </tr>#}
+{#                                        {% endif  %}#}
+{#                           {% endfor %}#}
+{##}
+{#                {% endif %}#}
+{##}
+{#        {% endfor %}#}
+{#    <tr><th></th><th></th></tr>#}
+{#{% endfor %}#}
+{##}
+{#</table>#}
+{##}
+{#    {% for i in orm %}#}
+{#      {{ i.product }}>>>>>>>>>>{{ i.order_id }}#}
+{#        <br>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#{% endfor %}#}
 
-                {% endif %}
+
+
+{% for a in oa %}
+    {%   for i in a %}
+        <table>
+        <tr>
+        {% if i == "" %}
+            {% else %}
+        <th>{{ i.product }}</th><th>{{ i.countp }}</th>
+        {% endif %}
+        </tr>
+        </table>
 
         {% endfor %}
-    <tr><th></th><th></th></tr>
+
+<br>
+
 {% endfor %}
 
-</table>
 {% endblock %}

@@ -14,7 +14,6 @@ class order(models.Model):
         return str(self.user_id)
 
 
-
 class order_details(models.Model):
     product = models.ForeignKey(product, on_delete=models.CASCADE)
     order = models.ForeignKey(order, on_delete=models.CASCADE)

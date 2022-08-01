@@ -19,7 +19,7 @@ def home(request):
     for i in prodacts_discounts:
         if i.id > c:
             c = i.id
-            print(c)
+            
 
     count_discounts = prodacts_discounts.count()
     cat = category.objects.filter(level=0)
