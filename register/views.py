@@ -28,12 +28,15 @@ class registerV(View):
             elif user1:
                 form.add_error('', 'تکراری username ')
             elif user_conpassword == user_password:
+                print(user_conpassword)
+                print(user_password)
                 new_user = User(email=user_email,
                                 email_active_code=get_random_string(72),
                                 username=user_name,
                                 is_active=False)
                 new_user.set_password(user_password)
                 new_user.save()
+                print('yes')
                 send_email('فعالسازی حساب کاربری', new_user.email, {'user': new_user}, 'email1.html')
                 return redirect(reverse('login'))
             else:
@@ -137,12 +140,16 @@ class resetV(View):
             user: User = User.objects.filter(email_active_code__iexact=code).first()
             if user is None:
                 return redirect(reverse('sign'))
+
             user_pass = reset_password.cleaned_data['password']
-            user.set_password(user_pass)
-            user.email_active_code = get_random_string(72)
-            user.is_active = True
-            user.save()
-            return redirect(reverse('login'))
+            user_pass_con = reset_password.cleaned_data['password_con']
+            if user_pass==user_pass_con:
+                user.set_password(user_pass)
+                user.email_active_code = get_random_string(72)
+                user.is_active = True
+                user.save()
+                print('yes')
+                return redirect(reverse('login'))
 
         context = {
             'resetpass': reset_password

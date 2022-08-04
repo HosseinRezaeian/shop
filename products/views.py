@@ -107,7 +107,7 @@ def mp(request, catp1, pr):
                 count_prodact_cart = ''
 
     ps = product.objects.get(slug=pr)
-    op = Opinion.objects.all().order_by('-id')
+    op = Opinion.objects.filter(proda=ps.id)
 
     return render(request, 'mprodact.html',
                   {'ps': ps, 'form': form, 'op': op, 'form2': form2, 'count_cart': count_prodact_cart})

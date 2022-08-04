@@ -3,13 +3,19 @@ from products.models import product
 from .models import order, order_details
 from django.views import View
 from django.shortcuts import render, redirect
+from register.models import User
 import logging
+from django.contrib.auth import get_user_model
+from django.contrib.auth import logout
+import jdatetime
+from django.contrib.auth.models import User
+
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from azbankgateways import bankfactories, models as bank_models, default_settings as settings
 from azbankgateways.exceptions import AZBankGatewaysException
 from datetime import date
-
+from .form import profile_change_pass
 
 # Create your views here.
 def usercart(request: HttpRequest):
@@ -111,7 +117,7 @@ def save_count(request: HttpRequest):
     for i in cart_shop:
         mul += i.countp * i.product.price
     return render(request, 'cart_shop_pa.html', {'cart_shop': user_open, 'multi': mul})
-    return HttpResponse('response')
+
 
 
 # payment
@@ -154,7 +160,7 @@ def go_to_gateway_view(request: HttpRequest):
 
             except AZBankGatewaysException as e:
                 logging.critical(e)
-                # TODO: redirect to failed page.
+
                 raise e
 
 
@@ -169,14 +175,14 @@ def callback_gateway_view(request):
     if not tracking_code:
         logging.debug("این لینک معتبر نیست.")
         hap = 'این لینک معتبر نیست.'
-        return render(request, 'callback_isnot_success.html', {'text': hap})
+        return render(request, 'callback_is_success.html', {'text': hap})
 
     try:
         bank_record = bank_models.Bank.objects.get(tracking_code=tracking_code)
     except bank_models.Bank.DoesNotExist:
         logging.debug("این لینک معتبر نیست.")
         hap = 'این لینک معتبر نیست.'
-        return render(request, 'callback_isnot_success.html', {'text': hap})
+        return render(request, 'callback_is_success.html', {'text': hap})
 
     # در این قسمت باید از طریق داده هایی که در بانک رکورد وجود دارد، رکورد متناظر یا هر اقدام مقتضی دیگر را انجام دهیم
     if bank_record.is_success:
@@ -185,25 +191,32 @@ def callback_gateway_view(request):
         is_paider = order.objects.get(user_id=current_user, is_paid=0)
         finall_ditail = order_details.objects.filter(final_price=None, order_id=is_paider.id).first()
         finall_ditail2 = order_details.objects.filter(final_price=None, order_id=is_paider.id)
+        prodact_all = product.objects.all()
 
         for dit in finall_ditail2:
             prodact_dit = product.objects.get(id=dit.product_id)
             prodact_dit.number = prodact_dit.number - dit.countp
+            dit.final_price = prodact_dit.price
+
+            dit.save()
             prodact_dit.save()
+
+
+
 
         mul = 0
         for i in cart_shop:
             mul += i.countp * i.product.price
         if mul != 0:
             is_paider.is_paid = True
-            today = date.today()
-            is_paider.pay_time = today
-            is_paider.tracking_code = bank_record.tracking_code
-            finall_ditail.final_price = mul
-            finall_ditail.save()
+            today = jdatetime.date.today()
+            is_paider.pay_time = str(today)
+            is_paider.tracking_code = bank_record.extra_information
+            is_paider.final_price = mul
+
             is_paider.save()
 
-            hap = bank_record.tracking_code
+            hap = 'خرید با موفقیت ثبت شد.'
 
             return render(request, 'callback_is_success.html', {'text': hap})
 
@@ -212,19 +225,52 @@ def callback_gateway_view(request):
     return render(request, 'callback_is_success.html', {'text': hap})
 
 
-def user(request, user_name):
-    order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True)
-    orm = order_details.objects.filter(order__in=order_user.all())
-    oa = []
-    for id_e in order_user:
+class user(View):
+    def get(self, request,user_name):
+        form = profile_change_pass()
+        order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True)
+        orm = order_details.objects.filter(order__in=order_user.all())
+        oa = []
+        for id_e in order_user:
+            ore = order_details.objects.filter(order_id=id_e.id)
+            if str(ore) == '<QuerySet []>':
+                print(str(ore))
+            else:
+                oa.append([[ore], [id_e.final_price, id_e.pay_time]])
+        print(oa)
 
-        ore = order_details.objects.filter(order_id=id_e.id)
-        if str(ore) == '<QuerySet []>':
-            print(str(ore))
-        else:
-            oa.append(ore)
+        # pr = product.objects.all()
+        return render(request, 'profile.html', {'order': order_user, 'orm': orm, 'oa': oa,'form':form})
 
-    print(oa)
 
-    # pr = product.objects.all()
-    return render(request, 'profile.html', {'order': order_user, 'orm': orm, 'oa': oa})
+    def post(self, request,user_name):
+        User = get_user_model()
+        reset_password = profile_change_pass(request.POST)
+        user: User = User.objects.filter(username=request.user).first()
+        if reset_password.is_valid():
+            user: User = User.objects.filter(username__iexact=request.user.username).first()
+            if user is None:
+                return redirect(reverse('sign'))
+
+            user_pass = reset_password.cleaned_data['password']
+            user_pass_con = reset_password.cleaned_data['password_con']
+            last_password = reset_password.cleaned_data['last_password']
+            is_password_correct = user.check_password(last_password)
+
+            if user_pass == user_pass_con and is_password_correct:
+                user.set_password(user_pass)
+
+                user.is_active = True
+                user.save()
+                print('yes')
+                return redirect(reverse('home'))
+
+        context = {
+            'resetpass': reset_password
+        }
+
+        return render(request, 'reset.html', context)
+
+
+
+

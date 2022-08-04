@@ -1,7 +1,10 @@
 {% extends 'base.html'%}
+
+{% load static %}
 {% block content %}
-
-
+    {% load crispy_forms_tags %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'jquery-3.6.0.min.js' %}"></script>
 <style>
 .div_org{
     height:100%;
@@ -10,87 +13,174 @@
 }
 table {
   font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 90%;
+border-collapse: collapse;
+  width: 100%;
     height:100%;
     margin-right: 5%;
+        margin:auto;
+
 }
 
-td, th {
-  border: 1px solid;
-  text-align: left;
+ th {
+
+  text-align: center;
   padding: 8px;
+  border-bottom: 1px solid #ddd;
+
+
 }
+.dvs{
+width: 100%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+
+}
+.font_th{
+    font-family: 'Vazirmatn', sans-serif;
+}
+.ddate-price-parent{
+
+                padding-top: 5%;
+                 float: right;
+                    width: 100%;
+                    display: flex ;
+                    flex-wrap: wrap;
+                justify-content: space-evenly;
+}
+.button-child{
+    margin-bottom: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+
+  background-color: #f61919;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+
+  outline: none;
+
+  position: relative;
+  text-align: center;
+
+  transition: color 100ms;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+    width: 100%;
+    height: 10%;
+}
+
+.button-child:hover,
+.button-child:focus {
+  background-color: #cc1111;
+}
+
 
 
 </style>
 
-<style>
+<div style="width: 100%;margin-top: 5%">
 
-
-
-th, td {
-  border-style:solid;
-  border-color: tomato;
-
-}
-table{
-    margin:auto;
-    width:70%;
-}
-</style>
-{#                               <table>#}
-{# <tr>#}
-{#     <th>محصول</th>#}
-{#     <th>تعداد</th>#}
-{# </tr>#}
-{#{% for i in order %}#}
-{#        {% for o in orm %}#}
-{#                {% if i.id == o.order_id %}#}
-{#                           {% for d in pr %}#}
-{#                                        {% if o.product_id == d.id %}#}
-{#                                                            <tr>#}
-{#                                                             <th >{{ d.title }}</th>#}
-{#                                                            <th style="width:30%">{{ o.countp }}</th>#}
-{#                                                            </tr>#}
-{#                                        {% endif  %}#}
-{#                           {% endfor %}#}
-{##}
-{#                {% endif %}#}
-{##}
-{#        {% endfor %}#}
-{#    <tr><th></th><th></th></tr>#}
-{#{% endfor %}#}
-{##}
-{#</table>#}
-{##}
-{#    {% for i in orm %}#}
-{#      {{ i.product }}>>>>>>>>>>{{ i.order_id }}#}
-{#        <br>#}
-{##}
-{##}
-{##}
-{##}
-{##}
-{#{% endfor %}#}
-
-
-
+<div style="width:50%;float: left">
+  <div class="ddate-price-parent" >
 {% for a in oa %}
-    {%   for i in a %}
-        <table>
-        <tr>
-        {% if i == "" %}
-            {% else %}
-        <th>{{ i.product }}</th><th>{{ i.countp }}</th>
-        {% endif %}
-        </tr>
-        </table>
 
-        {% endfor %}
 
-<br>
+
+
+
+                {% for i in a.0 %}
+                        <button class="button-child" onclick="hider(s{{ i.0.id }})" >
+                        <div style="margin-top: 2%;font-family: 'Vazirmatn', sans-serif;">تاریخ :  {{ a.1.1|date:" m / d / Y"}} </div>
+                            <div style="margin-top: 1%;margin-bottom: 2%;font-family: 'Vazirmatn', sans-serif;" >قیمت نهایی :{{ a.1.0 }} <i class="fa-solid fa-bag-shopping"></i> </div>
+
+
+
+                        </button>
+
+
+                        <div id="s{{ i.0.id }}" class="dvs">
+                        <table>
+                        <tr>
+                            <th class="font_th">محصولات</th>
+                            <th class="font_th" style="width: 10%">تعداد</th>
+                            <th class="font_th" >قیمت</th>
+
+                        </tr>
+
+                        {% for u in i %}
+                            <tr>
+
+                                <th class="font_th">{{ u.product }}</th>
+                                <th class="font_th">{{ u.countp }}</th>
+                                <th class="font_th">{{ u.final_price }}</th>
+
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        </div>
+{% endfor %}
 
 {% endfor %}
+ </div>
+</div>
+
+<div  style="  width: 40%; float: right">
+<button style="  width: 70%; margin-right:28%" class="button-child" onclick="change()" > تغییر رمز </button>
+<form  class="change" style="margin-right:28%;" method="post" action="{{ request.path }}">
+{% csrf_token %}
+{% for f in form %}
+    {{ f|as_crispy_field  }}
+{% endfor %}
+<button type="submit">تغییر رمز</button>
+</form>
+</div>
+</div>
+
+
+
+<script>
+
+
+
+function codeAddress() {
+
+             $ ( ".dvs" ).hide ();
+             $ ( ".change" ).hide ();
+                        }
+
+window.onload = codeAddress;
+function change(){
+    $ ( ".change" ).slideToggle();
+
+}
+function hider(sd){
+
+            console.log(sd);
+            $(".dvs").fadeOut('fast');
+
+            $(sd).toggle();
+
+};
+
+
+
+</script>
+
+
+
+
+
 
 {% endblock %}

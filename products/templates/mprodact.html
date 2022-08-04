@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load django_template_maths %}
 {% block content %}
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
@@ -8,10 +8,44 @@
  <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
         <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style>
 .bt{
     background-color: rgb(247, 6, 54);
 
+}
+.change{
+    margin-right: 2%;
 }
 .fr {
 
@@ -27,7 +61,7 @@
     visibility: hidden;
 }
 .im{margin-right: 25%;
-   
+
 float: left}
 .im:checked ~ .fr {
   opacity: 1;
@@ -49,7 +83,84 @@ float: left}
 
     visibility: visible;
       }
+
+
+.testimonial-box{
+    width:95%;
+    box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 15px;
+    cursor: pointer;
+}
+.name-user{
+    display: flex;
+    flex-direction: column;
+}
+.name-user strong{
+    color: #3d3d3d;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+.name-user span{
+    color: #979797;
+    font-size: 0.8rem;
+}
+
+.box-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.comment{
+    margin-right: 12%;
+    width: 50%;border: solid 1px chocolate;
+}
+.comment form{
+    margin: 2%auto;
+}
+#in{
+    border: solid 1px red  ;
+    margin: 10px auto;
+
+}
+.text_f{
+    display: block;
+    width: 100%;
+}
+.comentbot{
+    background-color:rgb(247, 6, 54) ;
+    color: #ffffff;
+
+
+    border:none;
+    border-radius:10px;
+
+}
+.comentbot div{
+    margin: 1%auto;
+    font-family: 'Vazirmatn', sans-serif;
+}
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -57,7 +168,7 @@ float: left}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'cmsh.css' %}">
-<div style="block:inline-block; height:100%;margin-right: 2%;margin-left: 2%;">
+<div style=" display: inline-block  ; height:50%;margin-right: 2%;margin-left: 2%;">
     <div style="width: 50%; float:right;height:100%;">
       <h1>{{ ps.title }}</h1>
            <br>
@@ -131,7 +242,7 @@ float: left}
 <button class="bt" onclick="add({{ ps.id }})">افزودن به سبد خرید</button>
         <div id="count_prodact">
         <input id="count_cart" type="hidden" value="{{ count_cart }}">
-        <span  ><i class="fa-solid fa-cart-circle-check"></i> {{ count_cart }} </span>
+        <span  > {{ count_cart }} </span>
             </div>
         <p id="demo"></p>
     <script>
@@ -177,47 +288,55 @@ $.get("{% url 'cart' %}",{
 {% endif %}
 </div>
 
-<div class="command" >
+<div class="comment" >
 
-<form method="post" id="my_form" action="{{ request.path }}">
+<form class="continer" method="post" id="my_form" action="{{ request.path }}">
     {% csrf_token %}
 {% if user.is_authenticated %}
-<input type="hidden"  name="namef" value="{{ user.username }}">
-<input type="hidden"  name="email_f" value="{{ user.email }}" >
+<input class="in" type="hidden"  name="namef" value="{{ user.username }}">
+<input class="in" type="hidden"  name="email_f" value="{{ user.email }}" >
 {% for f in form  %}
     {{ f }}
     {{ f.errors }}
     {% endfor %}
 {% else %}
-    <input type="text" placeholder="نام"   class="filed_f" name="namef" required>
-<input type="email" placeholder="ایمیل"  class="filed_f" name="email_f" required>
+    <input id="in" type="text" placeholder="نام"   class="filed_f" name="namef" required>
+<input id="in" type="email" placeholder="ایمیل"  class="filed_f" name="email_f" required>
 {% for f in form  %}
     {{ f }}
     {{ f.errors }}
     {% endfor %}
 {% endif %}
 
-    <input type="hidden" id="v1" name="prodactf" value="{{ ps.id }}">
-    <input type="hidden" name="path" value="{{ request.path }}">
+    <input class="in" type="hidden" id="v1" name="prodactf" value="{{ ps.id }}">
+    <input class="in" type="hidden" name="path" value="{{ request.path }}">
 
     <button class="but_sub" name="f1" type="submit">send</button>
 
 </form>
 
 </div>
+<button class="comentbot" style="  width: 95%;margin:2%"  onclick="change()" ><div>
+    مشاهده نظرات  ({{ op.count }})</div></button>
 
+
+
+
+
+    <div class="change">
 {% for o in op %}
 
-    {% if o.proda == ps.id %}
 
 
-<div class="coments">
+
+<div class="testimonial-box">
         <div>
-                <h5>  فرستنده: {{ o.name }}</h5>
+           <strong> <h4>  {{ o.title }}</h4></strong>
+
         </div>
 
         <div>
-                <h6>  عنوان:{{ o.title }}</h6>
+               <sub> {{ o.name }}@</sub>
         </div>
         <div>
                 <p>
@@ -227,7 +346,7 @@ $.get("{% url 'cart' %}",{
 
 
     <input type="checkbox" id="im" class="im"/>
-    <label for="im" > <img class="im" src="{% static "report.svg" %}"></label>
+
 
 <div class="fr">
 <form method="post" action="{{ request.path }}">
@@ -253,11 +372,30 @@ $.get("{% url 'cart' %}",{
 
 
 </div>
-    {% endif %}
+
 
 {% endfor %}
 
+</div>
 
 
+
+
+<script>
+function codeAddress() {
+
+
+             $ ( ".change" ).hide ();
+                        }
+
+window.onload = codeAddress;
+
+    function change(){
+    $ ( ".change" ).slideToggle();
+
+}
+
+
+</script>
 
 {% endblock %}

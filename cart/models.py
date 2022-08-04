@@ -1,14 +1,15 @@
 from django.db import models
 from register.models import User
 from products.models import product
-
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class order(models.Model):
     user_id = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     is_paid = models.BooleanField(default=False)
     pay_time = models.DateField(null=True, blank=True)
-    tracking_code = models.IntegerField(null=True, blank=True)
+    tracking_code = models.CharField(max_length=300,blank=True,null=True)
+    final_price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.user_id)
@@ -22,3 +23,8 @@ class order_details(models.Model):
 
     def __str__(self):
         return str(self.order)
+
+
+
+# Create your models here.
+
