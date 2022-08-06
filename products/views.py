@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpRequest
+from django.db.models import Avg, Max, Min
 from django.shortcuts import render, redirect
 from .models import Opinion, report
 from cart.models import order, order_details
@@ -9,17 +10,18 @@ from .models import product, discount
 from django.contrib.sites.shortcuts import get_current_site
 
 
+# category all
 def index(request):
     return render(request, 'list_a.html', {'genres': category.objects.all()})
 
 
+# home
 def home(request):
     prodacts_discounts = product.objects.filter(is_discount=True)
     c = 0
     for i in prodacts_discounts:
         if i.id > c:
             c = i.id
-            
 
     count_discounts = prodacts_discounts.count()
     cat = category.objects.filter(level=0)
@@ -28,17 +30,41 @@ def home(request):
                   {'category': cat, 'prodact_discount': prodacts_discounts, 'count': count_discounts, 'ip': c})
 
 
-# # Create your views here.
+list_p = []
+
+
+# next category
 def prodact(request, ps):
+    global list_p
     g1 = category.objects.get(id=ps)
+
+
     g3 = ps
+
     g2 = g1.get_children()
+    sub_menu(g2)
+    list_product = list_p
+    list_p = []
+    for i in list_product:
+        i1 = str(i)
+        if i1 == '<QuerySet []>':
+            list_product.remove(i)
 
     prod = product.objects.all()
 
-    # c = f.gat.all()
+    return render(request, 'list_b.html', {'f1': g2, 'g3': g3, 'prod': prod, 'list_product': list_product})
 
-    return render(request, 'list_b.html', {'f1': g2, 'g3': g3, 'prod': prod})
+
+def sub_menu(c2):
+    global list_p
+
+    for item in c2:
+        product_filter = product.objects.filter(category1_id=item.id)
+        if str(item.get_children()) is not '<QuerySet []>':
+            list_p.append(product_filter)
+
+        if str(item.get_children()) != '<TreeQuerySet []>':
+            sub_menu(item.get_children())
 
 
 def mp(request, catp1, pr):

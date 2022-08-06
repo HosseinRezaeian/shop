@@ -35,6 +35,33 @@
 
     {% endif %}
     {% endfor %}
+{% for item in list_product %}
+    {% for i in item %}
+
+                    <div class="item">
+            <div class="card">
+                <img src="../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
+                <h1 dir="rtl" style="
+                text-align: center;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 300px;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;">{{ i.title }}</h1>
+                <p class="price">{{ i.price }}تومان</p>
+                {% if i.is_discount is True %}
+                <p><del>{{ i.last_price }}</del><small style="color: #f12c2c">{{ i.cent }}%</small></p>
+                    {% else %}
+                    <p>  ...  </p>
+                    {% endif %}
+                <p><a href="{% url 'mp' catp1=i.category1_id pr=i.slug %}"><button>مشاهده محصول</button></a></p>
+            </div>
+        </div>
+
+    {% endfor %}
+{% endfor %}
+
 
 </section>
     </div>
