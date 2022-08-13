@@ -60,6 +60,19 @@
     opacity: 0;
     visibility: hidden;
 }
+.da {
+
+    left:0;
+
+    background-color: #fff;
+
+    width: 50%;
+    right: 0;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+}
 .im{margin-right: 25%;
 
 float: left}
@@ -74,7 +87,17 @@ float: left}
 .report{
     opacity: 0;
 }
-
+.anwser:checked ~ .da {
+  opacity: 1;
+    visibility: visible;
+}
+.rc{
+    width: 2%;
+    float: left;
+}
+.report{
+    opacity: 0;
+}
 
 
 
@@ -327,53 +350,101 @@ $.get("{% url 'cart' %}",{
 {% for o in op %}
 
 
+{% if o.answer_id is None %}
+
+    <div class="testimonial-box">
+
+            <div>
+               <strong> <h4>  {{ o.title }}</h4></strong>
+
+            </div>
+
+            <div>
+                   <sub> {{ o.name }}@</sub>
+            </div>
+            <div>
+                    <p>
+                    {{ o.text_area }}
+                    </p>
+            </div>
 
 
-<div class="testimonial-box">
-        <div>
-           <strong> <h4>  {{ o.title }}</h4></strong>
-
-        </div>
-
-        <div>
-               <sub> {{ o.name }}@</sub>
-        </div>
-        <div>
-                <p>
-                {{ o.text_area }}
-                </p>
-        </div>
 
 
-    <input type="checkbox" id="im" class="im"/>
+        <label  id="im" class="im">report</label>
+        <input type="checkbox" id="im" class="im"/>
 
 
-<div class="fr">
-<form method="post" action="{{ request.path }}">
+    <div class="fr">
+    <form method="post" action="{{ request.path }}">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+        <input type="hidden" name="name_f" value="{{ user.username }}">
+        <input type="hidden" name="email_f"  value="{{ user.email }}">
+        <input type="text" placeholder="متن رپورت"  name="text_f" required>
+        <input type="hidden" name="path1" value="{{ request.path }}">
+        <input type="hidden" name="idc" value="{{ o.id }}">
+            {% else %}
+
+        <input type="text" placeholder="نام"  name="name_f" required>
+        <input type="email" placeholder="ایمیل"  name="email_f" required>
+        <input type="text" placeholder="متن رپورت"  name="text_f" required>
+        <input type="hidden" name="path1" value="{{ request.path }}">
+        <input type="hidden" name="idc" value="{{ o.id }}">
+            {% endif %}
+    <button class="but_sub" name="f2" type="submit">send</button>
+    </form>
+
+    </div>
+
+
+
+
+     <label  id="im" class="im">anwser</label>
+        <input type="checkbox" id="im" class="anwser" name=""/>
+
+
+    <div class="da">
+        <form class="continer" method="post" id="my_form" action="{{ request.path }}">
     {% csrf_token %}
-    {% if user.is_authenticated %}
-    <input type="hidden" name="name_f" value="{{ user.username }}">
-    <input type="hidden" name="email_f"  value="{{ user.email }}">
-    <input type="text" placeholder="متن رپورت"  name="text_f" required>
-    <input type="hidden" name="path1" value="{{ request.path }}">
-    <input type="hidden" name="idc" value="{{ o.id }}">
-        {% else %}
+{% if user.is_authenticated %}
+<input class="in" type="hidden"  name="namef" value="{{ user.username }}">
+<input class="in" type="hidden"  name="email_f" value="{{ user.email }}" >
+    <input class="in" type="hidden"  name="answer" value="{{ o.id }}" >
+{% for f in form  %}
+    {{ f }}
+    {{ f.errors }}
+    {% endfor %}
+{% else %}
+    <input id="in" type="text" placeholder="نام"   class="filed_f" name="namef" required>
+<input id="in" type="email" placeholder="ایمیل"  class="filed_f" name="email_f" required>
+    <input class="in" type="hidden"  name="answer" value="{{ o.id }}" >
+{% for f in form  %}
+    {{ f }}
+    {{ f.errors }}
+    {% endfor %}
+{% endif %}
 
-    <input type="text" placeholder="نام"  name="name_f" required>
-    <input type="email" placeholder="ایمیل"  name="email_f" required>
-    <input type="text" placeholder="متن رپورت"  name="text_f" required>
-    <input type="hidden" name="path1" value="{{ request.path }}">
-    <input type="hidden" name="idc" value="{{ o.id }}">
-        {% endif %}
-<button class="but_sub" name="f2" type="submit">send</button>
+    <input class="in" type="hidden" id="v1" name="prodactf" value="{{ ps.id }}">
+    <input class="in" type="hidden" name="path" value="{{ request.path }}">
+
+    <button class="but_sub" name="f1" type="submit">send</button>
+
 </form>
-
-</div>
-
-
-</div>
+    </div>
 
 
+
+    </div>
+    {% for n in op %}
+        {% if n.answer_id == o.id %}
+            {{ n.title }}
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endif %}
 {% endfor %}
 
 </div>

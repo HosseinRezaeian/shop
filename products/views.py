@@ -83,7 +83,8 @@ def mp(request, catp1, pr):
                                email=request.POST['email_f'],
                                title=form.cleaned_data.get('titlef'),
                                text_area=form.cleaned_data.get('text_arf'),
-                               proda=request.POST['prodactf']
+                               proda=request.POST['prodactf'],
+                               answer_id=request.POST.get('answer',None)
 
                                )
                 pat = request.POST['path']
@@ -133,7 +134,7 @@ def mp(request, catp1, pr):
                 count_prodact_cart = ''
 
     ps = product.objects.get(slug=pr)
-    op = Opinion.objects.filter(proda=ps.id)
+    op = Opinion.objects.filter(proda=ps.id).order_by('-id')
 
     return render(request, 'mprodact.html',
                   {'ps': ps, 'form': form, 'op': op, 'form2': form2, 'count_cart': count_prodact_cart})
