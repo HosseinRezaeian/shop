@@ -6,9 +6,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.home, name='home'),
     path('prodacts', views.index, name='index'),
-    path('prodact/<slug:ps>', views.prodact, name="pro"),
+    path('prodact/<slug:ps>', views.prodact_list_view.as_view(), name="pro"),
     # path('<slug:ps1>/<slug:catp>', views.cp, name="cp"),
     path('<slug:catp1>/<slug:pr>', views.mp, name="mp"),
+path('all/allp/prodact', views.prodact_list_view.as_view(), name="mp"),
 
 ]
 if settings.DEBUG:

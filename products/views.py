@@ -6,6 +6,7 @@ from cart.models import order, order_details
 from .forms import opin
 from .forms import repo
 from .models import category
+from django.views.generic import ListView
 from .models import product, discount
 from django.contrib.sites.shortcuts import get_current_site
 
@@ -33,26 +34,77 @@ def home(request):
 list_p = []
 
 
+#
 # next category
-def prodact(request, ps):
-    global list_p
-    g1 = category.objects.get(id=ps)
+# def prodact(request, ps):
+#     global list_p
+#     g1 = category.objects.get(id=ps)
+#
+#     g3 = ps
+#
+#     g2 = g1.get_children()
+#     sub_menu(g2)
+#     list_product = list_p
+#     list_p = []
+#     for i in list_product:
+#         i1 = str(i)
+#         if i1 == '<QuerySet []>':
+#             list_product.remove(i)
+#
+#     prod = product.objects.all()
+#
+#     return render(request, 'list_b.html', {'f1': g2, 'g3': g3, 'prod': prod,
+#                                            'list_product': list_product})
 
 
-    g3 = ps
+class prodact_list_view(ListView):
+    template_name = 'testlistview.html'
+    paginate_by = 2
 
-    g2 = g1.get_children()
-    sub_menu(g2)
-    list_product = list_p
-    list_p = []
-    for i in list_product:
-        i1 = str(i)
-        if i1 == '<QuerySet []>':
-            list_product.remove(i)
 
-    prod = product.objects.all()
+    context_object_name = 'list_product'
 
-    return render(request, 'list_b.html', {'f1': g2, 'g3': g3, 'prod': prod, 'list_product': list_product})
+    def get_queryset(self, *args, **kwargs):
+
+        global categoryForsend
+        global list_p
+        global categoryKey
+
+        categoryKey = category.objects.get(id=self.kwargs['ps'])
+        categoryForsend = categoryKey.get_children()
+
+        sub_menu(categoryForsend)
+        list_product = list_p
+        list_p = []
+        for i in list_product:
+            i1 = str(i)
+            if i1 == '<QuerySet []>':
+                list_product.remove(i)
+
+        prod = product.objects.all()
+
+        list_test = []
+        for listQuery in list_product:
+            for pr in listQuery:
+                list_test.append(pr)
+
+        for ted in prod:
+            if ted.category1_id == int(self.kwargs['ps']):
+
+
+                list_test.append(ted)
+        print(list_test)
+
+        return list_test
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(prodact_list_view, self).get_context_data(*args, **kwargs)
+
+        context['categorySend'] = categoryForsend
+
+        return context
+
+    #
 
 
 def sub_menu(c2):
@@ -84,7 +136,7 @@ def mp(request, catp1, pr):
                                title=form.cleaned_data.get('titlef'),
                                text_area=form.cleaned_data.get('text_arf'),
                                proda=request.POST['prodactf'],
-                               answer_id=request.POST.get('answer',None)
+                               answer_id=request.POST.get('answer', None)
 
                                )
                 pat = request.POST['path']
