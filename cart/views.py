@@ -17,6 +17,7 @@ from azbankgateways.exceptions import AZBankGatewaysException
 from datetime import date
 from .form import profile_change_pass
 
+
 # Create your views here.
 def usercart(request: HttpRequest):
     print(request.GET.get('im'), )
@@ -119,7 +120,6 @@ def save_count(request: HttpRequest):
     return render(request, 'cart_shop_pa.html', {'cart_shop': user_open, 'multi': mul})
 
 
-
 # payment
 
 
@@ -201,9 +201,6 @@ def callback_gateway_view(request):
             dit.save()
             prodact_dit.save()
 
-
-
-
         mul = 0
         for i in cart_shop:
             mul += i.countp * i.product.price
@@ -226,9 +223,16 @@ def callback_gateway_view(request):
 
 
 class user(View):
-    def get(self, request,user_name):
+    def get(self, request, user_name):
+        date = []
+        price = []
         form = profile_change_pass()
-        order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True)
+        order_user = order.objects.filter(user_id_id=request.user.id, is_paid=True).order_by('pay_time')
+        for obg in order_user:
+            date.append(obg.pay_time)
+            print(obg.pay_time)
+            price.append(obg.final_price)
+
         orm = order_details.objects.filter(order__in=order_user.all())
         oa = []
         for id_e in order_user:
@@ -240,10 +244,10 @@ class user(View):
         print(oa)
 
         # pr = product.objects.all()
-        return render(request, 'profile.html', {'order': order_user, 'orm': orm, 'oa': oa,'form':form})
+        return render(request, 'profile.html',
+                      {'finallprice': price, 'date': date, 'order': order_user, 'orm': orm, 'oa': oa, 'form': form})
 
-
-    def post(self, request,user_name):
+    def post(self, request, user_name):
         User = get_user_model()
         reset_password = profile_change_pass(request.POST)
         user: User = User.objects.filter(username=request.user).first()
@@ -270,7 +274,3 @@ class user(View):
         }
 
         return render(request, 'reset.html', context)
-
-
-
-

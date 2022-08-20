@@ -5,6 +5,7 @@
         <a href="{% url "pro" ps=product.id %}">{{ product.title }}</a>
         <br>
     {% endfor %}
+
     <section class="slider-p" >
         {% for i in list_product %}
 
@@ -34,5 +35,7 @@
     {% for page in paginator.page_range %}
         <a href="?page={{page}}">{{ page }}</a>
     {% endfor %}
+
+
 
 {% endblock %}

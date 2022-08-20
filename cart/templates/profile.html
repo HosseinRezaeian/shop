@@ -5,6 +5,8 @@
     {% load crispy_forms_tags %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 <style>
 .div_org{
     height:100%;
@@ -102,7 +104,7 @@ width: 100%;
 
                 {% for i in a.0 %}
                         <button class="button-child" onclick="hider(s{{ i.0.id }})" >
-                        <div style="margin-top: 2%;font-family: 'Vazirmatn', sans-serif;">تاریخ :  {{ a.1.1|date:" m / d / Y"}} </div>
+                        <div style="margin-top: 2%;font-family: 'Vazirmatn', sans-serif;">تاریخ :  {{ a.1.1|date:" d / m / Y"}} </div>
                             <div style="margin-top: 1%;margin-bottom: 2%;font-family: 'Vazirmatn', sans-serif;" >قیمت نهایی :{{ a.1.0 }} <i class="fa-solid fa-bag-shopping"></i> </div>
 
 
@@ -149,10 +151,44 @@ width: 100%;
 </div>
 
 
+    <py-env>
+        - matplotlib
+</py-env>
+    <div id="matplotlib-lineplot"></div>
+    <py-script output="matplotlib-lineplot">
+        # Python Code
+
+
+        # importing the matplotlib library
+        import matplotlib.pyplot as plt
+        fig, ax = plt.subplots()
+        # x axis
+
+        x = [
+        {% for t in finallprice %}
+            "{{ t }}",
+        {% endfor %}
+        ]
+        # y axis
+        y = [{% for j in date %}
+            '{{ j|date:" y/m/d" }}',
+        {% endfor %}]
+        plt.plot(x, y, marker='o', linestyle='', color='r')
+        # Naming the x-label
+        plt.xlabel('Language')
+        # Naming the y-label
+        plt.ylabel('Score')
+        # Naming the title of the plot
+
+        fig
+
+     </py-script>
+    
+
+
+
 
 <script>
-
-
 
 function codeAddress() {
 
