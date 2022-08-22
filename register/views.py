@@ -80,7 +80,7 @@ class loginV(View):
                     is_password_correct = user.check_password(user_pass)
                     if is_password_correct:
                         login(request, user)
-                        return redirect('index')
+                        return redirect('product:index')
                     else:
                         login_form.add_error('email', 'کلمه عبور اشتباه است')
             else:
@@ -162,4 +162,4 @@ class resetV(View):
 class LogoutV(View):
     def get(self, request):
         logout(request)
-        return redirect(reverse('login'))
+        return redirect(reverse('register:login'))

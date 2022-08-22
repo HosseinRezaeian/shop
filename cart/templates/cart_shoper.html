@@ -81,7 +81,7 @@ tr:nth-child(even) {
 
 </table>
 
-<a href="{% url 'gateway' %}"><button >پرداخت</button></a><span id="demo"></span>
+<a href="{% url 'cart:gateway' %}"><button >پرداخت</button></a><span id="demo"></span>
 </div>
 
 
@@ -123,7 +123,7 @@ if(c<=i){
 
 
 
-    $.get("{% url 'save_count' %}",
+    $.get("{% url 'cart:save_count' %}",
 
         {id_dit,num}).then(result => {
 
@@ -144,7 +144,7 @@ document.getElementById("demo").innerHTML = "!!بیشتر از موجودی ان
 
 
  console.log(dit_id);
-$.get("{% url 'remove_cart' %}",{
+$.get("{% url 'cart:remove_cart' %}",{
     ditail_id : dit_id
 
 }).then(result => {

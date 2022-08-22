@@ -290,7 +290,7 @@ float: left}
 console.log(c);
 
  if(im <= {{ ps.number }} && con <= {{ ps.number }} ){
-$.get("{% url 'cart' %}",{
+$.get("{% url 'cart:cart' %}",{
     im,pro,np
 
 }).then(result => {

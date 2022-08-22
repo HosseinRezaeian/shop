@@ -3,6 +3,9 @@
 {% block content%}
 
 <div>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600&family=Vazirmatn:wght@700&display=swap" rel="stylesheet">
 <!-- Latest compiled and minified CSS -->
 <!-- https://xstore.8theme.com/demos/hosting/-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -216,7 +219,7 @@
                 {% if pd.id == ip %}
                     <div class="item active">
                      <div class="col-xs-12 col-sm-6 col-md-2">
-              <a href="{% url 'mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
+              <a href="{% url 'product:mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
               <span class="badge">{{ pd.cent }}%</span>
               <h4 style="font-family: 'Vazirmatn', sans-serif;" class="text-center">{{ pd.title }}</h4>
               <h5 style="font-family: 'Vazirmatn', sans-serif;" class="text-center">{{pd.price}} تومان</h5>
@@ -226,7 +229,7 @@
                     {% else %}
                      <div class="item">
             <div class="col-xs-12 col-sm-6 col-md-2">
-              <a href="{% url 'mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
+              <a href="{% url 'product:mp' catp1=pd.category1.id pr=pd.slug %}"><img src="../../media/{{ pd.pic }}" class="img-responsive center-block"></a>
               <span class="badge">{{ pd.cent }}%</span>
               <h4 style="font-family: 'Vazirmatn', sans-serif;" class="text-center">{{ pd.title }}</h4>
               <h5 style="font-family: 'Vazirmatn', sans-serif;" class="text-center">{{pd.price}} تومان</h5>
@@ -287,9 +290,10 @@
 
 {% for cat in category %}
 <div style="text-align: center;width:32% ;margin-bottom: 2%" >
-<a style="color:black;text-decoration: none;font-family: 'Vazirmatn', sans-serif;" href="{% url "pro" ps=cat.id %}"><img src="../../media/{{ cat.pic }}" style="width: 35% ;text-align:center" >
+<a  href="{% url "product:pro" ps=cat.id %}"><img src="../../media/{{ cat.pic }}" style="width: 35% ;text-align:center" >
 
-  <p>{{ cat.title }}</p>
+  <p style="color:black;font-family: 'Baloo Bhaijaan 2', cursive;
+font-family: 'Vazirmatn', sans-serif;">{{ cat.title }}</p>
  </a>
 </div>
 {% endfor %}

@@ -2,7 +2,8 @@
 {% block content %}
 
     {% for product in categorySend %}
-        <a href="{% url "pro" ps=product.id %}">{{ product.title }}</a>
+        <a style="font-family: 'Baloo Bhaijaan 2', cursive;
+font-family: 'Vazirmatn', sans-serif;" href="{% url "product:pro" ps=product.id %}">{{ product.title }}</a>
         <br>
     {% endfor %}
 
@@ -12,21 +13,27 @@
                     <div class="item">
             <div class="card">
                 <img src="/../../../media/{{ i.pic }}" alt="Denim Jeans" style="width:100%">
-                <h1 dir="rtl" style="
+                <h1  dir="rtl" style="
                 text-align: center;
+                text-decoration: none ;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 width: 300px;
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;">{{ i.title }}</h1>
-                <p class="price">{{ i.price }}تومان</p>
+                -webkit-box-orient: vertical;font-family: 'Baloo Bhaijaan 2', cursive;
+font-family: 'Vazirmatn', sans-serif;
+
+">{{ i.title }}</h1>
+                <p style="font-family: 'Baloo Bhaijaan 2', cursive;
+font-family: 'Vazirmatn', sans-serif;"  class="price">{{ i.price }}تومان</p>
                 {% if i.is_discount is True %}
                 <p><del>{{ i.last_price }}</del><small style="color: #f12c2c">{{ i.cent }}%</small></p>
                     {% else %}
                     <p>  ...  </p>
                     {% endif %}
-                <p><a href="{% url 'mp' catp1=i.slug pr=i.slug %}"><button>مشاهده محصول</button></a></p>
+                <p><a href="{% url 'product:mp' catp1=i.slug pr=i.slug %}"><button style="font-family: 'Baloo Bhaijaan 2', cursive;
+font-family: 'Vazirmatn', sans-serif;">مشاهده محصول</button></a></p>
             </div>
         </div>
 

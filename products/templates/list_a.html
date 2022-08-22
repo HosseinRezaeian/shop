@@ -11,7 +11,7 @@
     {% recursetree genres %}
 
         <li>
-            <a href="{% url "pro" ps=node.id %}">{{ node.title }}</a>
+            <a href="{% url "product:pro" ps=node.id %}">{{ node.title }}</a>
                     {% if not node.is_leaf_node %}
 
                                                 <ol class="children">
